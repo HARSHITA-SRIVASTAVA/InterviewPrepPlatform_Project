@@ -37,7 +37,7 @@ const getAllProblems = async (req, res) => {
     }
 
     if (search) {
-      filter.title = { $regex: search, $options: "i" };  //i->ignore case - sensitivty
+      filter.title = { $regex: search, $options: "i" };  //i->ignore case - sensitivity
     }
 
     const problems = await Problem.find(filter);
