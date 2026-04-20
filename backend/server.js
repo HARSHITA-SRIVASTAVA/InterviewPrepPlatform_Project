@@ -2,26 +2,29 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 
+//Configurations
 dotenv.config();
-
-// Connect DB
 connectDB();
 
-//app_var = expree()
 const app = express();
 
-//middleware
+// Middleware (Always goes before routes)
 app.use(express.json());
 
+//Route Imports
 const authRoutes = require("./routes/authRoutes");
-app.use("/api/auth", authRoutes);
+const problemRoutes = require("./routes/problemRoutes"); // Moved up
 
-app.get("/", (req, res) => {    //router
+//Routes Definitions
+app.use("/api/auth", authRoutes);
+app.use("/api/problems", problemRoutes); // Moved up
+
+app.get("/", (req, res) => {
     res.send("API running");
 });
 
+//Server Start (Always at the very bottom)
 const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {   //running 
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
