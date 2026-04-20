@@ -20,25 +20,40 @@ const createProblem=async(req,res)=>{
         });
     }
 };
+ 
+//Get all Problems + filtering using query params 
+const getAllProblems = async (req, res) => {
+  try {
+    const { difficulty, tag, search } = req.query;
 
-//Get all Problems
-const getAllProblems=async(req,res)=>{
-    try{
-        const problems=await Problem.find();  //find->get all
+    const filter = {};
 
-        res.status(200).json({
-            success:true,
-            count:problems.length,
-            data:problems,
-        });
+    if (difficulty) {
+      filter.difficulty = difficulty;
     }
-    catch(error){
-        res.status(500).json({
-        success: false,
-        message: error.message,
-        });
+
+    if (tag) {
+      filter.tags = tag;
     }
-};
+
+    if (search) {
+      filter.title = { $regex: search, $options: "i" };  //i->ignore case - sensitivty
+    }
+
+    const problems = await Problem.find(filter);
+
+    res.status(200).json({
+      success: true,
+      count: problems.length,
+      data: problems,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}; 
 
 //Get single problem
 const getProblemById=async(req,res)=>{
