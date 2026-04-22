@@ -42,6 +42,7 @@ const problemSchema = new mongoose.Schema(
     timestamps: true,  //auto add createdAt and updatedAt
   }
 );
+problemSchema.index({ title: 1, platform: 1 }, { unique: true });
 
 //covert schema into model
 const Problem = mongoose.model("Problem", problemSchema);
