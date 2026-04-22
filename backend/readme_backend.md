@@ -1,15 +1,10 @@
 #  Smart Interview Preparation Platform (Backend)
-
 A scalable backend system designed to help students **track, analyze, and improve coding interview preparation** through structured problem tracking and analytics.
 
----
-
 ## Overview
-
 This backend powers a full-stack application focused on **interview preparation management**, not problem solving.
 
 Users can:
-
 * Track coding problems from platforms like LeetCode
 * Monitor progress and consistency
 * View analytics and activity history
@@ -78,22 +73,18 @@ Users can:
 
 ## 📂 Project Structure
 
-//image : **
+<img width="230" height="300" alt="image" src="https://github.com/user-attachments/assets/3041188c-59f8-40e1-8645-d6ac7d6d1745" />
+
 
 ## API Endpoints
 
 ### Auth Routes
 
-
 POST   /api/auth/register
 POST   /api/auth/login
 GET    /api/auth/profile
 
-
-
-
 ###  Problem Routes
-
 
 POST   /api/problems
 GET    /api/problems
@@ -109,15 +100,12 @@ PUT    /api/tracking/:id
 DELETE /api/tracking/:id
 
 ###  Dashboard
-
 GET /api/dashboard
 
 ### Activity
-
 GET /api/activity
 
 ##  Environment Variables
-
 Create a `.env` file:
 
 PORT=5000
@@ -126,7 +114,6 @@ JWT_SECRET=your_secret_key
 
 
 ##  Running Locally
-
 ```bash
 # Install dependencies
 npm install
@@ -136,7 +123,6 @@ npm run dev
 ```
 
 ##  Testing
-
 * Tested using Postman
 * Verified:
 
@@ -147,13 +133,11 @@ npm run dev
 
 
 ##  Deployment
-
 * Backend deployed on Render
 * Database hosted on MongoDB Atlas
 
 
 ##  Resume Highlights
-
 * Built a production-ready backend with authentication, analytics, and activity tracking
 * Designed scalable REST APIs with MongoDB and Express
 * Implemented relational data handling using Mongoose
@@ -161,7 +145,6 @@ npm run dev
 * Developed optimized queries using sorting, limiting, and population
 
 ##  Future Improvements
-
 * Smart problem recommendations
 * Streak tracking system
 * Advanced filtering & search
@@ -170,6 +153,5 @@ npm run dev
 
 
 ##  Author
-
 HARSHITA SRIVASTAVA
 Developed as part of a full-stack project to master backend engineering and system design fundamentals.
