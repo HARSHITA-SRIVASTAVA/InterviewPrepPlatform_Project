@@ -26,6 +26,9 @@ app.get("/", (req, res) => {
 const trackingRoutes = require("./routes/trackingRoutes");
 app.use("/api/tracking", trackingRoutes);
 
+const dashboardRoutes = require("./routes/dashboardRoutes");
+app.use("/api/dashboard", dashboardRoutes);
+
 //Server Start (Always at the very bottom)
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
