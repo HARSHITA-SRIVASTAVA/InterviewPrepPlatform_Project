@@ -23,6 +23,9 @@ app.get("/", (req, res) => {
     res.send("API running");
 });
 
+const trackingRoutes = require("./routes/trackingRoutes");
+app.use("/api/tracking", trackingRoutes);
+
 //Server Start (Always at the very bottom)
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
