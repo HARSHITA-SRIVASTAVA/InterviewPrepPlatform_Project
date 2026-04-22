@@ -1,10 +1,10 @@
-# 🚀 Smart Interview Preparation Platform (Backend)
+#  Smart Interview Preparation Platform (Backend)
 
 A scalable backend system designed to help students **track, analyze, and improve coding interview preparation** through structured problem tracking and analytics.
 
 ---
 
-## 📌 Overview
+## Overview
 
 This backend powers a full-stack application focused on **interview preparation management**, not problem solving.
 
@@ -15,9 +15,7 @@ Users can:
 * View analytics and activity history
 * Receive structured insights into their preparation
 
----
-
-## 🏗️ Tech Stack
+## Tech Stack
 
 * **Node.js** – Runtime environment
 * **Express.js** – Backend framework
@@ -26,35 +24,31 @@ Users can:
 * **JWT (JSON Web Tokens)** – Authentication
 * **Bcrypt.js** – Password hashing
 
----
 
-## 🔐 Authentication Features
+## Authentication Features
 
 * User registration with validation
 * Secure password hashing using bcrypt
 * Login with JWT token generation
 * Protected routes using middleware
 
----
 
-## 📦 Core Features
+## Core Features
 
-### 1. Problem Management
+###  1.Problem Management
 
 * Add, update, delete problems
 * Store metadata: title, difficulty, tags, platform, link
 * Enforced uniqueness using compound index (`title + platform`)
 
----
 
-### 2. Problem Tracking
+###  2.Problem Tracking
 
 * Track problems as solved/unsolved
 * Add personal notes
 * Prevent duplicate tracking per user
 * User-specific tracking system
 
----
 
 ### 3. Dashboard Analytics
 
@@ -62,18 +56,16 @@ Users can:
 * Solved vs unsolved breakdown
 * Progress percentage calculation
 
----
 
-### 4. Activity History
+### 4.Activity History
 
 * Shows recent user activity
 * Sorted by latest updates
 * Limited results for performance optimization
 * Uses MongoDB sorting and population
 
----
 
-## 🧠 Key Backend Concepts Implemented
+##  Key Backend Concepts Implemented
 
 * RESTful API design
 * Middleware-based authentication
@@ -83,87 +75,57 @@ Users can:
 * Structured error handling
 * Scalable project architecture
 
----
 
 ## 📂 Project Structure
 
-```
-backend/
-│── controllers/
-│── models/
-│── routes/
-│── middleware/
-│── config/
-│── server.js
-│── .env
-```
+//image : **
 
----
+## API Endpoints
 
-## 🔗 API Endpoints
+### Auth Routes
 
-### 🔐 Auth Routes
 
-```
 POST   /api/auth/register
 POST   /api/auth/login
 GET    /api/auth/profile
-```
 
----
 
-### 📦 Problem Routes
 
-```
+
+###  Problem Routes
+
+
 POST   /api/problems
 GET    /api/problems
 GET    /api/problems/:id
 PUT    /api/problems/:id
 DELETE /api/problems/:id
-```
 
----
+### Tracking Routes
 
-### 🔗 Tracking Routes
-
-```
 POST   /api/tracking
 GET    /api/tracking
 PUT    /api/tracking/:id
 DELETE /api/tracking/:id
-```
 
----
+###  Dashboard
 
-### 📊 Dashboard
-
-```
 GET /api/dashboard
-```
 
----
+### Activity
 
-### 🕒 Activity
-
-```
 GET /api/activity
-```
 
----
-
-## ⚙️ Environment Variables
+##  Environment Variables
 
 Create a `.env` file:
 
-```
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
-```
 
----
 
-## ▶️ Running Locally
+##  Running Locally
 
 ```bash
 # Install dependencies
@@ -173,9 +135,7 @@ npm install
 npm run dev
 ```
 
----
-
-## 🧪 Testing
+##  Testing
 
 * Tested using Postman
 * Verified:
@@ -185,16 +145,14 @@ npm run dev
   * Data validation
   * Sorting & filtering logic
 
----
 
-## 🚀 Deployment
+##  Deployment
 
-* Backend deployed on **Render**
-* Database hosted on **MongoDB Atlas**
+* Backend deployed on Render
+* Database hosted on MongoDB Atlas
 
----
 
-## 💼 Resume Highlights
+##  Resume Highlights
 
 * Built a production-ready backend with authentication, analytics, and activity tracking
 * Designed scalable REST APIs with MongoDB and Express
@@ -202,9 +160,7 @@ npm run dev
 * Ensured data integrity with compound indexing
 * Developed optimized queries using sorting, limiting, and population
 
----
-
-## 🔮 Future Improvements
+##  Future Improvements
 
 * Smart problem recommendations
 * Streak tracking system
@@ -212,8 +168,8 @@ npm run dev
 * Activity event logging system
 * Frontend integration (React)
 
----
 
-## 👨‍💻 Author
+##  Author
 
+HARSHITA SRIVASTAVA
 Developed as part of a full-stack project to master backend engineering and system design fundamentals.
