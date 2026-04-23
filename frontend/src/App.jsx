@@ -1,10 +1,12 @@
+import {Routes,Route} from "react-router-dom";
+
 function App() {
   return (
-    <div className="text-center mt-10">
-      <h1 className="text-3xl font-bold">
-        Smart Interview Prep Platform
-      </h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<h1>Home Page</h1>} />
+      <Route path="/login" element={<h1>Login Page </h1>}/>
+      <Route path="/dashboard" element={<h1>Dashboard Page</h1>}/>
+    </Routes>
   );
 }
 
