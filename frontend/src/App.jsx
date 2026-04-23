@@ -1,11 +1,16 @@
 import {Routes,Route} from "react-router-dom";
 
+//import pages
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<h1>Home Page</h1>} />
-      <Route path="/login" element={<h1>Login Page </h1>}/>
-      <Route path="/dashboard" element={<h1>Dashboard Page</h1>}/>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />}/>
+      <Route path="/dashboard" element={<Dashboard />}/>
     </Routes>
   );
 }
