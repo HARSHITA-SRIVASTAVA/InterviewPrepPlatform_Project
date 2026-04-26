@@ -1,5 +1,6 @@
 import {Navigate,Outlet } from "react-router-dom";
 
+
 const ProtectedRoute=() => {
     //get token from local storage
     const token =localStorage.getItem("token");
