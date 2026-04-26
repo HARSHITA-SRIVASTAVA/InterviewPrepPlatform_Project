@@ -1,3 +1,4 @@
+import API from "../api/axios";
 import { useState } from "react"; //react hook ->store and update data in comp
 
 
@@ -12,7 +13,7 @@ const { email, password } = formData;
 
 
 //Handle input changes -> run whenever user type in input feilds
-const handleChange = (e) => {
+const handleChange =  (e) => {
   setFormData({
     ...formData,       //keep old value
     [e.target.name]: e.target.value,   //get input name : user type 
@@ -20,7 +21,7 @@ const handleChange = (e) => {
 };
 
   //handle submit
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
 
   if (!email || !password) {
@@ -28,6 +29,36 @@ const handleSubmit = (e) => {
     return;
   }
 
+  try{
+    //send req to backend
+    const res=await API.post("/auth/login", {
+      email:email,
+      password:password,
+    });
+
+    //Debugging logs
+    console.log("Full Response: ",res);
+    console.log("Response Data:",res.data);
+    console.log("Token:",res.data.token);
+    
+  }
+  catch(error){
+    console.log("Error Object:",error);
+
+    //if backend reponse with error
+    if (error.response) {
+      console.log("Error Response:", error.response);
+      console.log("Error Data:", error.response.data);
+      console.log("Error Status:", error.response.status);
+    } 
+
+    //if no response from backend
+    else if (error.request) 
+      console.log("No response received:", error.request);
+
+    else 
+      console.log("Error Message:", error.message);
+  }
   console.log("Form Data:", formData);
 };
 
