@@ -40,7 +40,8 @@ const handleSubmit = async (e) => {
     console.log("Full Response: ",res);
     console.log("Response Data:",res.data);
     console.log("Token:",res.data.token);
-    
+    localStorage.setItem("token", res.data.token);   //store JWT token
+    console.log("Stored Token:", localStorage.getItem("token"));
   }
   catch(error){
     console.log("Error Object:",error);
