@@ -14,9 +14,7 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
 
       const res = await API.get("/dashboard", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: {Authorization: `Bearer ${token}`,},
       });
 
       setStats(res.data.data);
@@ -64,7 +62,7 @@ const Dashboard = () => {
       {problems.length > 0 ? (
         <div className="flex flex-col gap-4">
           {problems.map((p) => (
-            <ProblemCard key={p._id} problem={p} />
+            <ProblemCard key={p._id} problem={p} onUpdate={fetchDashboard} />
           ))}
         </div>
       ) : (
