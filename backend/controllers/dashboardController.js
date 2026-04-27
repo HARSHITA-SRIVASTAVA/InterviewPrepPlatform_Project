@@ -70,9 +70,9 @@ const getDashboardStats = async(req , res)=>{
             }
         });
 
-        //find wekest are to recommend
-        let weakArea="None";
-        let max=0;
+        //find weakest area to recommend
+        let weakArea="Easy";
+        let max=0;     //max unsolved problem
 
         for(let key in difficultyCount){
             if(difficultyCount[key]>max){
@@ -80,6 +80,11 @@ const getDashboardStats = async(req , res)=>{
                 weakArea=key;
             }
         }
+        if(total==0)
+            weakArea="Easy";   //user solved nothing
+
+        else if(unsolved == 0)
+            weakArea="Hard";  //user solved all
 
         //return 
         res.status(200).json({
