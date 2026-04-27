@@ -59,6 +59,7 @@ const Dashboard = () => {
           <StatCard title="Solved" value={stats.solved} />
           <StatCard title="Unsolved" value={stats.unsolved} />
           <StatCard title="Progress (%)" value={stats.progress} />
+          <StatCard title="Current Streak 🔥" value={stats.streak} />
         </div>
       ) : (
         <p>Loading stats...</p>
