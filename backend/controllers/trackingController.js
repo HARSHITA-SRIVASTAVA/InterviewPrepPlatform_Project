@@ -87,7 +87,7 @@ const updateTracking = async (req, res) => {
       { _id: trackingId, user: userId },
       req.body,
       {
-        new: true,
+        returnDocument: "after",
         runValidators: true,
       }
     );

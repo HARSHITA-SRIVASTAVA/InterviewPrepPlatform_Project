@@ -3,10 +3,13 @@ import API from "../api/axios";
 import StatCard from "../components/StatCard";
 import ProblemCard from "../components/ProblemCard";
 import TrackProblemForm from "../components/TrackProblemForm";
+import ActivityItem from "../components/ActivityItem";
+
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
   const [problems, setProblems] = useState([]);
+  const [history , setHistory]=useState([]);   //adding new state
 
   const fetchDashboard = async () => {
     try {
@@ -27,6 +30,16 @@ const Dashboard = () => {
       //console.log("Tracking Data:", trackingRes.data);
 
       setProblems(trackingRes.data.data);
+
+      //activity history
+      const historyRes=await API.get("/activity" ,{
+        headers : {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log("History Data: ",historyRes.data);
+      setHistory(historyRes.data.data);
 
     } catch (error) {
       console.log("Dashboard Error:", error.response?.data || error.message);
@@ -52,8 +65,7 @@ const Dashboard = () => {
       )}
       
       {/* Tracking Problems */}
-      <TrackProblemForm onSuccess={(newData) => setProblems(newData)} />
-
+      <TrackProblemForm onSuccess={fetchDashboard} />
       {/* Tracked Problems Section */}
       <h2 className="text-xl font-bold mt-8 mb-4">
         Tracked Problems
@@ -68,6 +80,26 @@ const Dashboard = () => {
       ) : (
         <p className="text-gray-500">
           No problems tracked yet.
+        </p>
+      )}
+
+      <h2 className="text-x1 font-bold mt-8 mb-4">
+        Recent Activity
+      </h2>
+
+      <h2 className="text-xl font-bold mt-8 mb-4">
+        Recent Activity
+      </h2>
+
+      {history.length > 0 ? (
+        <div className="flex flex-col gap-3">
+          {history.map((item) => (
+            <ActivityItem key={item._id} item={item} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-gray-500">
+          No recent activity
         </p>
       )}
     </div>

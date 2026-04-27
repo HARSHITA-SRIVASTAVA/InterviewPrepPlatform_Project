@@ -46,7 +46,7 @@ const TrackProblemForm = ({ onSuccess }) => {
       setStatus("unsolved");
 
       //Update UI instantly
-      onSuccess(res.data.data);
+      onSuccess();
 
     } catch (error) {
       console.log(
