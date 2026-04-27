@@ -3,152 +3,129 @@ import API from "../api/axios";
 import StatCard from "../components/StatCard";
 import ProblemCard from "../components/ProblemCard";
 import TrackProblemForm from "../components/TrackProblemForm";
-import ActivityItem from "../components/ActivityItem";
-
 
 const Dashboard = () => {
+  //State for stats (total, solved, etc.)
   const [stats, setStats] = useState(null);
+
+  //State for tracked problems
   const [problems, setProblems] = useState([]);
-  const [history , setHistory]=useState([]);   //adding new state
-  const [recommended,setRecommended]=useState([]);  //display recommended problem
-  const [loading , setLoading]=useState(true);    //display loading until whole data fetched 
 
+  // State for recommended problems
+  const [recommended, setRecommended] = useState([]);
+
+  // Loading state (used for sections, not full page)
+  const [loading, setLoading] = useState(true);
+
+  // Fetch dashboard data
   const fetchDashboard = async () => {
-  try {
-    setLoading(true); // start loading
+    try {
+      setLoading(true);
 
-    const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
-    // PARALLEL API CALLS
-    const [dashboardRes, trackingRes] = await Promise.all([
-      API.get("/dashboard", {
+      // 🔥 SINGLE API CALL (optimized backend)
+      const res = await API.get("/dashboard", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }),
-      API.get("/tracking", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-    ]);
+      });
 
-    //Set dashboard stats
-    setStats(dashboardRes.data.data);
+      const data = res.data.data;
 
-    //Set recommended problems
-    setRecommended(dashboardRes.data.data.recommended);
+      // Set all states
+      setStats(data);
+      setRecommended(data.recommended);
+      setProblems(data.tracking);
 
-    //Set tracked problems
-    setProblems(trackingRes.data.data);
+    } catch (error) {
+      console.log("Dashboard Error:", error.response?.data || error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  } catch (error) {
-    console.log("Dashboard Error:", error.response?.data || error.message);
-  } finally {
-    setLoading(false); // stop loading
-  }
-};
-
-  useEffect(() => { fetchDashboard(); }, []);
-
-  if(loading){
-    return(
-      <div className="p-6">
-        <h1 className="text-2xl fond-bold">Dashboard</h1>
-        <p className="mt-4 text-gray-500">Loading dashboard...</p>
-      </div>
-    );
-  }
+  // Run once when component loads
+  useEffect(() => {
+    fetchDashboard();
+  }, []);
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 
-      {/* Stats Section */}
+      {/* STATS SECTION */}
       {stats ? (
         <div className="flex gap-6 flex-wrap">
           <StatCard title="Total Problems" value={stats.total} />
           <StatCard title="Solved" value={stats.solved} />
           <StatCard title="Unsolved" value={stats.unsolved} />
           <StatCard title="Progress (%)" value={stats.progress} />
-          <StatCard title="Current Streak 🔥" value={stats.streak} />
+          <StatCard title="Streak 🔥" value={stats.streak} />
           <StatCard title="Focus Area 🎯" value={stats.weakArea} />
         </div>
       ) : (
-        <p>Loading stats...</p>
+        <p className="text-gray-500">Loading stats...</p>
       )}
-      
-      {/* Tracking Problems */}
+
+      {/* TRACK FORM */}
       <TrackProblemForm onSuccess={fetchDashboard} />
-      {/* Tracked Problems Section */}
+
+      {/*  TRACKED PROBLEMS */}
       <h2 className="text-xl font-bold mt-8 mb-4">
         Tracked Problems
       </h2>
 
-      {problems.length > 0 ? (
+      {loading ? (
+        <p className="text-gray-500">Loading problems...</p>
+      ) : problems.length > 0 ? (
         <div className="flex flex-col gap-4">
-          {problems.map((p) => (   //loop through each problem
-            <ProblemCard key={p._id} problem={p} onUpdate={fetchDashboard} />
-          ))}
-        </div>
-      ) : (
-      <p className="text-gray-500">
-        You haven't tracked any problems yet. Start by adding one above 👆
-      </p>
-      )}
-
-      <h2 className="text-xl font-bold mt-8 mb-4">
-        Recommended Problems 🎯
-      </h2>
-
-      {recommended.length > 0 ? (
-      <div className="flex flex-col gap-4">
-        {recommended.map((p) => (
-          <div
-            key={p._id}
-            className="bg-yellow-50 border p-4 rounded-xl shadow-sm"
-          >
-          <h3 className="font-semibold">{p.title}</h3>
-
-          <p className="text-sm text-gray-500">
-            {p.difficulty}
-          </p>
-
-          {p.link && (
-            <a
-              href={p.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 text-sm mt-2 inline-block hover:underline"
-            >
-            Solve Problem →
-            </a>
-            )}
-          </div>
-        ))}
-      </div>
-    ) : (
-      <p className="text-gray-500">
-        No recommendations yet. Solve or track problems to get suggestions 🚀
-      </p>
-    )}
-      <h2 className="text-x1 font-bold mt-8 mb-4">
-        Recent Activity
-      </h2>
-
-      <h2 className="text-xl font-bold mt-8 mb-4">
-        Recent Activity
-      </h2>
-
-      {history.length > 0 ? (
-        <div className="flex flex-col gap-3">
-          {history.map((item) => (
-            <ActivityItem key={item._id} item={item} />
+          {problems.map((p) => (
+            <ProblemCard key={p._id} problem={p} />
           ))}
         </div>
       ) : (
         <p className="text-gray-500">
-          No recent activity
+          You haven't tracked any problems yet. Start by adding one 👆
+        </p>
+      )}
+
+      {/* RECOMMENDED PROBLEMS  */}
+      <h2 className="text-xl font-bold mt-8 mb-4">
+        Recommended Problems 🎯
+      </h2>
+
+      {loading ? (
+        <p className="text-gray-500">Loading recommendations...</p>
+      ) : recommended.length > 0 ? (
+        <div className="flex flex-col gap-4">
+          {recommended.map((p) => (
+            <div
+              key={p._id}
+              className="bg-yellow-50 border p-4 rounded-xl shadow-sm"
+            >
+              <h3 className="font-semibold">{p.title}</h3>
+
+              <p className="text-sm text-gray-500">
+                {p.difficulty}
+              </p>
+
+              {p.link && (
+                <a
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 text-sm mt-2 inline-block hover:underline"
+                >
+                  Solve Problem →
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-gray-500">
+          No recommendations yet. Solve or track problems to get suggestions 🚀
         </p>
       )}
     </div>

@@ -87,6 +87,8 @@ const getDashboardStats = async (req, res) => {
       difficulty: weakArea,
     }).limit(3);
 
+    const tracking = await Tracking.find({ user: userId }).populate("problem").sort({ updatedAt: -1 });    //for increasing loading speed
+
     // Return
     res.status(200).json({
       success: true,
@@ -98,6 +100,7 @@ const getDashboardStats = async (req, res) => {
         streak,
         weakArea,   //recommendation
         recommended, //represent recommended prob
+        tracking,
       },
     });
   } catch (error) {
