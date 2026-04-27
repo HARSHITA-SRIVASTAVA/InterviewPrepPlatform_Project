@@ -11,44 +11,54 @@ const Dashboard = () => {
   const [problems, setProblems] = useState([]);
   const [history , setHistory]=useState([]);   //adding new state
   const [recommended,setRecommended]=useState([]);  //display recommended problem
+  const [loading , setLoading]=useState(true);    //display loading until whole data fetched 
 
   const fetchDashboard = async () => {
-    try {
-      //console.log("Fetching dashboard again...");
-      const token = localStorage.getItem("token");
+  try {
+    setLoading(true); // start loading
 
-      const res = await API.get("/dashboard", {
-        headers: {Authorization: `Bearer ${token}`,},
-      });
+    const token = localStorage.getItem("token");
 
-      setStats(res.data.data);
-
-      const trackingRes = await API.get("/tracking", {
+    // PARALLEL API CALLS
+    const [dashboardRes, trackingRes] = await Promise.all([
+      API.get("/dashboard", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
-      //console.log("Tracking Data:", trackingRes.data);
-
-      setProblems(trackingRes.data.data);
-
-      //activity history
-      const historyRes=await API.get("/activity" ,{
-        headers : {
+      }),
+      API.get("/tracking", {
+        headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
+      }),
+    ]);
 
-      console.log("History Data: ",historyRes.data);
-      setHistory(historyRes.data.data);
-      setRecommended(res.data.data.recommended);
+    //Set dashboard stats
+    setStats(dashboardRes.data.data);
 
-    } catch (error) {
-      console.log("Dashboard Error:", error.response?.data || error.message);
-    }
-  };
+    //Set recommended problems
+    setRecommended(dashboardRes.data.data.recommended);
+
+    //Set tracked problems
+    setProblems(trackingRes.data.data);
+
+  } catch (error) {
+    console.log("Dashboard Error:", error.response?.data || error.message);
+  } finally {
+    setLoading(false); // stop loading
+  }
+};
 
   useEffect(() => { fetchDashboard(); }, []);
+
+  if(loading){
+    return(
+      <div className="p-6">
+        <h1 className="text-2xl fond-bold">Dashboard</h1>
+        <p className="mt-4 text-gray-500">Loading dashboard...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6">
@@ -83,7 +93,7 @@ const Dashboard = () => {
         </div>
       ) : (
       <p className="text-gray-500">
-        No problems tracked yet.
+        You haven't tracked any problems yet. Start by adding one above 👆
       </p>
       )}
 
@@ -119,7 +129,7 @@ const Dashboard = () => {
       </div>
     ) : (
       <p className="text-gray-500">
-        No recommendations available
+        No recommendations yet. Solve or track problems to get suggestions 🚀
       </p>
     )}
       <h2 className="text-x1 font-bold mt-8 mb-4">
