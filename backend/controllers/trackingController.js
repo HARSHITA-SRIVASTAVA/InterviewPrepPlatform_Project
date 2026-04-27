@@ -4,50 +4,59 @@ const Problem=require("../models/problemModel");
 
 //for each tracking->check prob exist ->already tracked?return : track
 
-const addTracking=async(req,res)=>{
-  try{
-    const userId=req.user._id;
-    const { problemId }=req.body;  //{ }-> inside body find problemId:Destructuring Assignment
+const addTracking = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { problemId, status } = req.body;
 
-    //check problem exists
-    const problemExists=await Problem.findById(problemId);
-    if(!problemExists){
+    //Check problem exists
+    const problemExists = await Problem.findById(problemId);
+    if (!problemExists) {
       return res.status(404).json({
-        success:false,
-        message:"Problem not found",
+        success: false,
+        message: "Problem not found",
       });
     }
 
-    //check duplicate tracking
+    //Check duplicate
     const existing = await Tracking.findOne({
-      user:userId,
-      problem:problemId,
+      user: userId,
+      problem: problemId,
     });
 
-    if(existing){
+    if (existing) {
       return res.status(400).json({
-        sucess:false,
-        message:"Already tracking this problem",
+        success: false,
+        message: "Already tracking this problem",
       });
     }
 
-    const tracking = await Tracking.find({ user: userId }).populate("problem", "title difficulty");
+    //CREATE TRACKING 
+    await Tracking.create({
+      user: userId,
+      problem: problemId,
+      status: status || "unsolved",
+    });
 
+    // Fetch updated list
+    const tracking = await Tracking.find({ user: userId })
+      .populate("problem");
+
+    // Return updated data
     res.status(201).json({
-      success:true,
-      data:tracking,
-      });
-  }
-  catch(error){
+      success: true,
+      data: tracking,
+    });
+
+  } catch (error) {
     res.status(500).json({
-      success:false,
+      success: false,
       message: error.message,
     });
   }
 };
 
 //get users Tracked Problem
-
 const getUserTracking =async(req,res)=>{
     try{
       const userId=req.user._id;
