@@ -10,6 +10,7 @@ const Dashboard = () => {
   const [stats, setStats] = useState(null);
   const [problems, setProblems] = useState([]);
   const [history , setHistory]=useState([]);   //adding new state
+  const [recommended,setRecommended]=useState([]);  //display recommended problem
 
   const fetchDashboard = async () => {
     try {
@@ -40,6 +41,7 @@ const Dashboard = () => {
 
       console.log("History Data: ",historyRes.data);
       setHistory(historyRes.data.data);
+      setRecommended(res.data.data.recommended);
 
     } catch (error) {
       console.log("Dashboard Error:", error.response?.data || error.message);
@@ -75,16 +77,51 @@ const Dashboard = () => {
 
       {problems.length > 0 ? (
         <div className="flex flex-col gap-4">
-          {problems.map((p) => (
+          {problems.map((p) => (   //loop through each problem
             <ProblemCard key={p._id} problem={p} onUpdate={fetchDashboard} />
           ))}
         </div>
       ) : (
-        <p className="text-gray-500">
-          No problems tracked yet.
-        </p>
+      <p className="text-gray-500">
+        No problems tracked yet.
+      </p>
       )}
 
+      <h2 className="text-xl font-bold mt-8 mb-4">
+        Recommended Problems 🎯
+      </h2>
+
+      {recommended.length > 0 ? (
+      <div className="flex flex-col gap-4">
+        {recommended.map((p) => (
+          <div
+            key={p._id}
+            className="bg-yellow-50 border p-4 rounded-xl shadow-sm"
+          >
+          <h3 className="font-semibold">{p.title}</h3>
+
+          <p className="text-sm text-gray-500">
+            {p.difficulty}
+          </p>
+
+          {p.link && (
+            <a
+              href={p.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 text-sm mt-2 inline-block hover:underline"
+            >
+            Solve Problem →
+            </a>
+            )}
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p className="text-gray-500">
+        No recommendations available
+      </p>
+    )}
       <h2 className="text-x1 font-bold mt-8 mb-4">
         Recent Activity
       </h2>
