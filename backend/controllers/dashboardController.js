@@ -25,9 +25,9 @@ const getDashboardStats = async(req , res)=>{
 
         //unique dates
         const uniqueDates = [
-        ...new Set(
+        ...new Set(     //remove duplicates
             solvedProblems.map((item) =>
-            new Date(item.updatedAt).toDateString()
+            new Date(item.updatedAt).toDateString() //get dates in string
             )
         ),
         ];
@@ -39,15 +39,46 @@ const getDashboardStats = async(req , res)=>{
         const today = new Date();
         const checkDate = new Date(uniqueDates[i]);
 
-        const diffDays = Math.floor(
+        const diffDays = Math.floor(    //1000-> ms - s , 60 : sec- min , 60  : min -hr 24->hr -day
             (today - checkDate) / (1000 * 60 * 60 * 24)
         );
 
-        if (diffDays === i) {
+        if (diffDays === i) {    
             streak++;
         } else {
             break;
         }
+        }
+
+        //get all tracked problem with details
+        const tracked = await Tracking.find({user: userId}).populate("problem");
+
+        //count unsolved by difficulty 
+        //If many unsolved "Hard" → recommend more "Hard"
+        const difficultyCount={
+            Easy:0,
+            Medium:0,
+            Hard:0,
+        };
+
+        tracked.forEach((item) => {
+            if(item.status=="unsolved"){
+                //count difficulty : ex-> easy 1 .. , ?:prevent creash if problem missing (chaining)
+                const diff = item.problem?.difficulty;  
+                if(difficultyCount[diff]!=undefined)
+                    difficultyCount[diff]++;  //unsolved count for each easy: / med: /hard
+            }
+        });
+
+        //find wekest are to recommend
+        let weakArea="None";
+        let max=0;
+
+        for(let key in difficultyCount){
+            if(difficultyCount[key]>max){
+                max=difficultyCount[key];
+                weakArea=key;
+            }
         }
 
         //return 
@@ -59,6 +90,7 @@ const getDashboardStats = async(req , res)=>{
                 unsolved,
                 progress,
                 streak,
+                weakArea,    //recommendation
             },
         });
     } 
