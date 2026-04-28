@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-r from-blue-200 to-indigo-400 text-white">
 
       {/* HERO SECTION */}
       <div className="flex flex-col items-center justify-center text-center py-20 px-6">

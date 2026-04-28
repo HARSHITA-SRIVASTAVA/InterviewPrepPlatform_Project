@@ -83,8 +83,11 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-sm">
-      <h3 className="font-semibold">
+    <div className="bg-white p-5 rounded-2xl shadow-sm hover:shadow-lg transition">
+      
+      {/* //left side */}
+      
+      <h3 className="font-semibold text-lg">
         {problem.problem?.title}
       </h3>
 
@@ -93,14 +96,20 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
       </p>
 
       <p className="mt-2">
-        Status: <span className="font-medium">{problem.status}</span>
+        <span className={`text-xs px-3 py-1 rounded mt-2 inline-block ${
+          problem.status === "solved"
+          ? "bg-green-100 text-green-600": "bg-yellow-100 text-yellow-600"}`}>
+          {problem.status}
+        </span>
       </p>
+    
 
-      <div className="flex gap-2 mt-3">
+      
+      <div className="gap-5 mt-3 items-end">
         <button
           onClick={handleToggleStatus}
           disabled={actionLoading}
-          className="bg-green-500 text-white px-3 py-1 rounded"
+          className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm"
         >
           {actionLoading
             ? "Updating..."
@@ -112,7 +121,7 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
         <button
           onClick={handleDelete}
           disabled={actionLoading}
-          className="bg-red-500 text-white px-3 py-1 rounded"
+          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
         >
           {actionLoading ? "Removing..." : "Remove"}
         </button>

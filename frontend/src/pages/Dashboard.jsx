@@ -20,6 +20,9 @@ const Dashboard = () => {
 
   const [activity, setActivity] = useState([]); //activity
 
+  //state for filter feature
+  
+
   // Fetch dashboard data
   const fetchDashboard = async () => {
     try {
@@ -63,7 +66,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="p-6">
+    <div className="bg-gray-100 p-6 rounded-2xl">
       <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 
       {/* STATS SECTION */}
