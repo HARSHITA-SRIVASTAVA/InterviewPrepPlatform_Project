@@ -1,5 +1,6 @@
 import { useState } from "react";
 import API from "../api/axios";
+import { toast } from "react-toastify";
 
 const ProblemCard = ({ problem, onUpdate, setProblems }) => {
   const [actionLoading, setActionLoading] = useState(false);
@@ -34,8 +35,10 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
         }
       );
 
-      if (onUpdate) onUpdate();
+      toast.success("Status updated!");
 
+      if (onUpdate) onUpdate();
+      
     } catch (error) {
       console.log(
         "Update Error:",
@@ -66,8 +69,10 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
       });
 
       if (onUpdate) onUpdate();
+      toast.success("Problem removed!");
 
     } catch (error) {
+      toast.error("Action failed");
       console.log(
         "Delete Error:",
         error.response?.data || error.message

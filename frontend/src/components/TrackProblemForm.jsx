@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../api/axios";
+import { toast } from "react-toastify";
 
 const TrackProblemForm = ({ onSuccess }) => {
   const [problemId, setProblemId] = useState("");
@@ -47,9 +48,10 @@ const TrackProblemForm = ({ onSuccess }) => {
         }
       );
 
-      console.log("Tracked:", res.data); 
+      
       // SUCCESS
-      setMessage("Problem tracked successfully ✅");
+      // setMessage("Problem tracked successfully ✅");
+      toast.success("Problem tracked!");
 
       //Reset
       setProblemId("");
@@ -59,8 +61,9 @@ const TrackProblemForm = ({ onSuccess }) => {
       onSuccess(res.data.data);
 
     } catch (error) {
-      const msg=error.response?.message || "Already tracked! You can update your progress in the dashboard below.👇🏻";
-      setError(msg);
+      toast.error(
+        error.response?.data?.message || "Already tracked! You can update your progress in the dashboard"
+      );
     }
   };
 

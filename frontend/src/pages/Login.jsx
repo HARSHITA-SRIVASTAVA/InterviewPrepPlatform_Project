@@ -2,7 +2,7 @@ import API from "../api/axios";
 import { useState } from "react"; //react hook ->store and update data in comp
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
+import { toast } from "react-toastify";
 
 //create component
 const Login = () => {   //formData->curr val , setFormData->update data
@@ -48,9 +48,12 @@ const handleSubmit = async (e) => {
     login(res.data.token);  //store JWT token
     navigate("/dashboard");
     console.log("Stored Token:", localStorage.getItem("token"));
+
+    toast.success("Login successfull!")
   }
   catch(error){
     console.log("Error Object:",error);
+    toast.error(error.response?.data?.message || "Login failed");
 
     //if backend reponse with error
     if (error.response) {
