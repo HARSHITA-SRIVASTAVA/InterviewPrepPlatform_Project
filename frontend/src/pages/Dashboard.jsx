@@ -3,6 +3,7 @@ import API from "../api/axios";
 import StatCard from "../components/StatCard";
 import ProblemCard from "../components/ProblemCard";
 import TrackProblemForm from "../components/TrackProblemForm";
+import ActivityItem from "../components/ActivityItem";
 
 const Dashboard = () => {
   //State for stats (total, solved, etc.)
@@ -17,6 +18,8 @@ const Dashboard = () => {
   // Loading state (used for sections, not full page)
   const [loading, setLoading] = useState(true);
 
+  const [activity, setActivity] = useState([]); //activity
+
   // Fetch dashboard data
   const fetchDashboard = async () => {
     try {
@@ -24,7 +27,7 @@ const Dashboard = () => {
 
       const token = localStorage.getItem("token");
 
-      // 🔥 SINGLE API CALL (optimized backend)
+      // SINGLE API CALL (optimized backend)
       const res = await API.get("/dashboard", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -33,10 +36,19 @@ const Dashboard = () => {
 
       const data = res.data.data;
 
+      const activityRes = await API.get("/activity", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log("Activity Data:", activityRes.data);
+
       // Set all states
       setStats(data);
       setRecommended(data.recommended);
       setProblems(data.tracking);
+      setActivity(activityRes.data.data);
 
     } catch (error) {
       console.log("Dashboard Error:", error.response?.data || error.message);
@@ -69,8 +81,12 @@ const Dashboard = () => {
       )}
 
       {/* TRACK FORM */}
-      <TrackProblemForm onSuccess={fetchDashboard} />
-
+      <TrackProblemForm
+        onSuccess={(newData) => {
+          setProblems(newData);     
+          fetchDashboard();         
+        }}
+      />
       {/*  TRACKED PROBLEMS */}
       <h2 className="text-xl font-bold mt-8 mb-4">
         Tracked Problems
@@ -81,7 +97,7 @@ const Dashboard = () => {
       ) : problems.length > 0 ? (
         <div className="flex flex-col gap-4">
           {problems.map((p) => (
-            <ProblemCard key={p._id} problem={p} />
+            <ProblemCard key={p._id} problem={p}  onUpdate={fetchDashboard}  setProblems={setProblems} />
           ))}
         </div>
       ) : (
@@ -126,6 +142,24 @@ const Dashboard = () => {
       ) : (
         <p className="text-gray-500">
           No recommendations yet. Solve or track problems to get suggestions 🚀
+        </p>
+      )}
+      {/* ACTIVITY SECTION */}
+      <h2 className="text-xl font-bold mt-8 mb-4">
+        Recent Activity
+      </h2>
+
+      {loading ? (
+        <p className="text-gray-500">Loading activity...</p>
+      ) : activity.length > 0 ? (
+        <div className="flex flex-col gap-3">
+          {activity.map((a) => (
+            <ActivityItem key={a._id} activity={a} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-gray-500">
+          No activity yet.
         </p>
       )}
     </div>

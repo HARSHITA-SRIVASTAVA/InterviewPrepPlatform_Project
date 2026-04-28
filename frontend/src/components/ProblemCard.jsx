@@ -1,15 +1,30 @@
+import { useState } from "react";
 import API from "../api/axios";
 
-const ProblemCard = ({ problem, onUpdate }) => {
+const ProblemCard = ({ problem, onUpdate, setProblems }) => {
+  const [actionLoading, setActionLoading] = useState(false);
 
-  const handleToggle = async () => {  //marking solved and unsolved
+  // Toggle solved / unsolved
+  const handleToggleStatus = async () => {
     try {
+      setActionLoading(true);
+
       const token = localStorage.getItem("token");
 
       const newStatus =
         problem.status === "solved" ? "unsolved" : "solved";
 
-      const res = await API.put(
+      //  Optimistic UI update
+      setProblems((prev) =>
+        prev.map((item) =>
+          item._id === problem._id
+            ? { ...item, status: newStatus }
+            : item
+        )
+      );
+
+      // API call
+      await API.put(
         `/tracking/${problem._id}`,
         { status: newStatus },
         {
@@ -19,44 +34,52 @@ const ProblemCard = ({ problem, onUpdate }) => {
         }
       );
 
-      console.log("Updated:", res.data);
-
-      //  refresh UI
-      onUpdate();
+      if (onUpdate) onUpdate();
 
     } catch (error) {
       console.log(
         "Update Error:",
         error.response?.data || error.message
       );
+    } finally {
+      setActionLoading(false);
     }
   };
 
+  // Delete tracking
   const handleDelete = async () => {
-  try {
-    const token = localStorage.getItem("token");
+    try {
+      setActionLoading(true);
 
-    const res = await API.delete( `/tracking/${problem._id}`,   //dynamic URL
-      { headers: {Authorization: `Bearer ${token}`,},}          //verification
-    );
+      const token = localStorage.getItem("token");
 
-    console.log("Deleted:", res.data);
+      // Optimistic UI update
+      setProblems((prev) =>
+        prev.filter((item) => item._id !== problem._id)
+      );
 
-    //refresh UI
-    onUpdate();
+      // API call
+      await API.delete(`/tracking/${problem._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-  } catch (error) {
-    console.log(
-      "Delete Error:",
-      error.response?.data || error.message
-    );
-  }
-};
+      if (onUpdate) onUpdate();
+
+    } catch (error) {
+      console.log(
+        "Delete Error:",
+        error.response?.data || error.message
+      );
+    } finally {
+      setActionLoading(false);
+    }
+  };
 
   return (
-    <div className="bg-white shadow-md rounded-xl p-4 w-full">
-      
-      <h3 className="font-semibold text-lg">
+    <div className="bg-white p-4 rounded-xl shadow-sm">
+      <h3 className="font-semibold">
         {problem.problem?.title}
       </h3>
 
@@ -64,31 +87,38 @@ const ProblemCard = ({ problem, onUpdate }) => {
         {problem.problem?.difficulty}
       </p>
 
-      <p className="text-sm mt-1">
-        Status: {problem.status}
+      <p className="mt-2">
+        Status: <span className="font-medium">{problem.status}</span>
       </p>
 
-      {/* Toggle Button */}
-      <button
-        onClick={handleToggle}
-        className="mt-3 bg-green-600 text-white px-3 py-1 rounded text-sm"
-      >
-        Mark as {problem.status === "solved" ? "Unsolved" : "Solved"}
-      </button>
+      <div className="flex gap-2 mt-3">
+        <button
+          onClick={handleToggleStatus}
+          disabled={actionLoading}
+          className="bg-green-500 text-white px-3 py-1 rounded"
+        >
+          {actionLoading
+            ? "Updating..."
+            : problem.status === "solved"
+            ? "Mark as Unsolved"
+            : "Mark as Solved"}
+        </button>
 
-      <button
-        onClick={handleDelete}
-        className="mt-2 bg-red-600 text-white px-3 py-1 rounded text-sm">
-        Remove
-      </button>
+        <button
+          onClick={handleDelete}
+          disabled={actionLoading}
+          className="bg-red-500 text-white px-3 py-1 rounded"
+        >
+          {actionLoading ? "Removing..." : "Remove"}
+        </button>
+      </div>
 
-      {/* Link */}
       {problem.problem?.link && (
         <a
           href={problem.problem.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="block mt-2 text-blue-600 text-sm hover:underline"
+          className="text-blue-600 text-sm mt-2 inline-block hover:underline"
         >
           Solve Problem →
         </a>

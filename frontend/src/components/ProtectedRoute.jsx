@@ -1,14 +1,14 @@
-import {Navigate,Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
+const ProtectedRoute = () => {
+  const { token } = useAuth(); // REACTIVE STATE
 
-const ProtectedRoute=() => {
-    //get token from local storage
-    const token =localStorage.getItem("token");
+  if (token) {
+    return <Outlet />;
+  }
 
-    if(token){
-        return <Outlet />   //redirect to nested routers->dashboard
-    }
-    return <Navigate to ="/login" replace />  //if not logIn->No token ->login 
+  return <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;

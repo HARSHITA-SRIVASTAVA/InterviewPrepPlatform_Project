@@ -6,6 +6,11 @@ const TrackProblemForm = ({ onSuccess }) => {
   const [status, setStatus] = useState("unsolved");
   const [problemList, setProblemList] = useState([]);
 
+  //error message on adding duplicates
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+
   // Fetch all problems for dropdown
   useEffect(() => {
     const fetchProblems = async () => {
@@ -24,6 +29,9 @@ const TrackProblemForm = ({ onSuccess }) => {
     e.preventDefault();
 
     try {
+      setError("");
+      setMessage("")
+
       const token = localStorage.getItem("token");
 
       const res = await API.post(
@@ -39,20 +47,20 @@ const TrackProblemForm = ({ onSuccess }) => {
         }
       );
 
-      console.log("Tracked:", res.data);
+      console.log("Tracked:", res.data); 
+      // SUCCESS
+      setMessage("Problem tracked successfully ✅");
 
       //Reset
       setProblemId("");
       setStatus("unsolved");
 
       //Update UI instantly
-      onSuccess();
+      onSuccess(res.data.data);
 
     } catch (error) {
-      console.log(
-        "Tracking Error:",
-        error.response?.data || error.message
-      );
+      const msg=error.response?.message || "Already tracked! You can update your progress in the dashboard below.👇🏻";
+      setError(msg);
     }
   };
 
@@ -95,8 +103,20 @@ const TrackProblemForm = ({ onSuccess }) => {
       >
         Add Problem
       </button>
-    </form>
-  );
-};
+
+      {message && (
+        <p className="text-green-600 mt-2 text-sm">
+          {message}
+        </p>
+      )}
+
+      {error && (
+        <p className="text-red-500 mt-2 text-sm">
+          {error}
+        </p>
+      )}
+          </form>
+        );
+      };
 
 export default TrackProblemForm;

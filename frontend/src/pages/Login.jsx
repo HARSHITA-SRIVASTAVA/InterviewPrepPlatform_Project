@@ -1,13 +1,14 @@
 import API from "../api/axios";
 import { useState } from "react"; //react hook ->store and update data in comp
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "../context/AuthContext";
 
 
 //create component
 const Login = () => {   //formData->curr val , setFormData->update data
   
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -44,7 +45,7 @@ const handleSubmit = async (e) => {
     console.log("Full Response: ",res);
     console.log("Response Data:",res.data);
     console.log("Token:",res.data.token);
-    localStorage.setItem("token", res.data.token);   //store JWT token
+    login(res.data.token);  //store JWT token
     navigate("/dashboard");
     console.log("Stored Token:", localStorage.getItem("token"));
   }
