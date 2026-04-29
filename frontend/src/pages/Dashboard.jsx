@@ -23,7 +23,8 @@ const Dashboard = () => {
   //state for filter feature
   const[filter , setFilter]=useState("all");
 
-  //state for serach
+  //state for search feature
+  const [search , setSearch]=useState("");
 
   // Fetch dashboard data
   const fetchDashboard = async () => {
@@ -69,8 +70,12 @@ const Dashboard = () => {
 
   //filtering
   const filteredProblems = (problems || []).filter((p) => {
-    if (filter === "all") return true;
-    return p.status === filter;
+   const matchesFilter=
+    filter=="all" || p.status==filter;
+
+    const matchesSearch = p.problem.title?.toLowerCase().includes(search.toLowerCase());
+
+    return matchesFilter && matchesSearch;
   });
 
   return (
@@ -91,6 +96,13 @@ const Dashboard = () => {
         <p className="text-gray-500">Loading stats...</p>
       )}
 
+      {/* progress bar */}
+      {stats && (
+        <div className="mt-6 bg-white p-6 rounded-2xl shadow-md">
+          <div className="flex justify-between mb-2"
+        </div>
+      )}
+
       {/* TRACK FORM */}
       <TrackProblemForm
         onSuccess={(newData) => {
@@ -102,6 +114,14 @@ const Dashboard = () => {
       <h2 className="text-xl font-bold mt-8 mb-4">
         Tracked Problems
       </h2>
+
+      <input
+        type="text"
+        placeholder="🔍 Search problems..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
 
       {/* FILTER BUTTONS HERE */}
       <div className="flex gap-3 mb-4">
