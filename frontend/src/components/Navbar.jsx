@@ -11,7 +11,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-900 text-white px-6 py-4 flex justify-between items-center">
+    <nav className="bg-white text-black dark:bg-gray-900 dark:text-white px-6 py-4 flex justify-between items-center">
       
       {/* Logo / Brand */}
       <h1 className="text-xl font-bold">
@@ -30,6 +30,12 @@ const Navbar = () => {
             Dashboard
           </Link>
         )}
+
+        {/* <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="bg-gray-700 px-3 py-1 rounded">
+          {darkMode ? "☀" : "🌙"}
+        </button> */}
 
         {/* Logout Button */}
         {token ? (

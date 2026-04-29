@@ -88,8 +88,15 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="bg-gray-100 p-6 rounded-2xl">
-      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
+    <div className="min-h screen bg-gray-100 p-6 rounded-2xl">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">
+          Dashboard
+        </h1>
+        <p className="text-gray-500 text-sm mt-1">
+          Track your coding progress 🚀
+        </p>
+</    div>
 
       {/* STATS SECTION */}
       {stats ? (
@@ -139,7 +146,8 @@ const Dashboard = () => {
       <h2 className="text-xl font-bold mt-8 mb-4">
         Tracked Problems
       </h2>
-
+      
+      
       <input
         type="text"
         placeholder="🔍 Search problems..."
@@ -149,7 +157,7 @@ const Dashboard = () => {
       />
 
       {/* FILTER BUTTONS HERE */}
-      <div className="flex gap-3 mb-4">
+      <div className="flex flex-col sm:flex-row gap-4 mb-6">
         
         <button
           onClick={() => setFilter("all")}

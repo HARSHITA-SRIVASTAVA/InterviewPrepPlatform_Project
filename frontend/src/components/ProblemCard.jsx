@@ -113,7 +113,7 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
   };
 
   return (
-    <div className="bg-white p-5 rounded-2xl shadow-sm hover:shadow-lg transition">
+    <div className="bg-white p-5 rounded-2xl shadow-sm hover:shadow-lg transition duration-300">
       
       {/* //left side */}
       
@@ -137,7 +137,7 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
         <button
           onClick={handleToggleStatus}
           disabled={actionLoading}
-          className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm"
+          className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition"
         >
           {actionLoading
             ? "Updating..."
@@ -149,7 +149,7 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
         <button
           onClick={handleDelete}
           disabled={actionLoading}
-          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
+          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition"
         >
           {actionLoading ? "Removing..." : "Remove"}
         </button>

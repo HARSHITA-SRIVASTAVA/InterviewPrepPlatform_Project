@@ -73,7 +73,7 @@ const TrackProblemForm = ({ onSuccess }) => {
       onSubmit={handleSubmit}
       className="bg-white p-4 rounded-xl shadow-md mt-6"
     >
-      <h2 className="font-semibold mb-3">Track New Problem</h2>
+      <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Track New Problem</h2>
 
       {/* Dropdown instead of input */}
       <select
