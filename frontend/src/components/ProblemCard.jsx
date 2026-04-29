@@ -102,9 +102,7 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
           {problem.status}
         </span>
       </p>
-    
 
-      
       <div className="gap-5 mt-3 items-end">
         <button
           onClick={handleToggleStatus}

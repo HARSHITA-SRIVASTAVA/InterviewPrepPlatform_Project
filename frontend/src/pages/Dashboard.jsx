@@ -21,7 +21,9 @@ const Dashboard = () => {
   const [activity, setActivity] = useState([]); //activity
 
   //state for filter feature
-  
+  const[filter , setFilter]=useState("all");
+
+  //state for serach
 
   // Fetch dashboard data
   const fetchDashboard = async () => {
@@ -45,7 +47,7 @@ const Dashboard = () => {
         },
       });
 
-      console.log("Activity Data:", activityRes.data);
+      //console.log("Activity Data:", activityRes.data);
 
       // Set all states
       setStats(data);
@@ -64,6 +66,12 @@ const Dashboard = () => {
   useEffect(() => {
     fetchDashboard();
   }, []);
+
+  //filtering
+  const filteredProblems = (problems || []).filter((p) => {
+    if (filter === "all") return true;
+    return p.status === filter;
+  });
 
   return (
     <div className="bg-gray-100 p-6 rounded-2xl">
@@ -95,7 +103,57 @@ const Dashboard = () => {
         Tracked Problems
       </h2>
 
-      {loading ? (
+      {/* FILTER BUTTONS HERE */}
+      <div className="flex gap-3 mb-4">
+        
+        <button
+          onClick={() => setFilter("all")}
+          className={`px-3 py-1 rounded ${
+            filter === "all" ? "bg-blue-500 text-white" : "bg-gray-200"
+          }`}
+        >
+          All
+        </button>
+
+        <button
+          onClick={() => setFilter("solved")}
+          className={`px-3 py-1 rounded ${
+            filter === "solved" ? "bg-green-500 text-white" : "bg-gray-200"
+          }`}
+        >
+          Solved
+        </button>
+
+        <button
+          onClick={() => setFilter("unsolved")}
+          className={`px-3 py-1 rounded ${
+            filter === "unsolved" ? "bg-yellow-500 text-white" : "bg-gray-200"
+          }`}
+        >
+          Unsolved
+        </button>
+
+      </div>
+
+      {/*  PROBLEMS LIST */}
+      {filteredProblems.length > 0 ? (
+        <div className="flex flex-col gap-4">
+          {filteredProblems.map((p) => (
+            <ProblemCard
+              key={p._id}
+              problem={p}
+              onUpdate={fetchDashboard}
+              setProblems={setProblems}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="text-gray-500">
+          No problems found.
+        </p>
+      )}
+
+      {/* {loading ? (
         <p className="text-gray-500">Loading problems...</p>
       ) : problems.length > 0 ? (
         <div className="flex flex-col gap-4">
@@ -107,7 +165,7 @@ const Dashboard = () => {
         <p className="text-gray-500">
           You haven't tracked any problems yet. Start by adding one 👆
         </p>
-      )}
+      )} */}
 
       {/* RECOMMENDED PROBLEMS  */}
       <h2 className="text-xl font-bold mt-8 mb-4">
