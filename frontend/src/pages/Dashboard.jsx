@@ -26,6 +26,9 @@ const Dashboard = () => {
   //state for search feature
   const [search , setSearch]=useState("");
 
+  //add notes
+  const [notes , setNotes]=useState("");
+
   // Fetch dashboard data
   const fetchDashboard = async () => {
     try {
@@ -78,6 +81,12 @@ const Dashboard = () => {
     return matchesFilter && matchesSearch;
   });
 
+  const getColor = () => {
+    if (stats.progress < 40) return "bg-red-500";
+    if (stats.progress < 70) return "bg-yellow-500";
+    return "bg-green-500";
+  };
+
   return (
     <div className="bg-gray-100 p-6 rounded-2xl">
       <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
@@ -88,7 +97,7 @@ const Dashboard = () => {
           <StatCard title="Total Problems" value={stats.total} />
           <StatCard title="Solved" value={stats.solved} />
           <StatCard title="Unsolved" value={stats.unsolved} />
-          <StatCard title="Progress (%)" value={stats.progress} />
+          {/* <StatCard title="Progress (%)" value={stats.progress} /> */}
           <StatCard title="Streak 🔥" value={stats.streak} />
           <StatCard title="Focus Area 🎯" value={stats.weakArea} />
         </div>
@@ -99,7 +108,23 @@ const Dashboard = () => {
       {/* progress bar */}
       {stats && (
         <div className="mt-6 bg-white p-6 rounded-2xl shadow-md">
-          <div className="flex justify-between mb-2"
+          <div className="flex justify-between mb-2">
+            <span className="text-gray-600 font-medium">
+              Progress
+            </span>
+            <span className="font-semibold">
+              {stats.progress}%
+            </span>
+          </div>
+          {/* BAR CONTAINER */}
+          <div className="w-full bg-gray-200 h-3 rounded-full">
+
+            {/* FILLED BAR */}
+            <div
+              className={`${getColor()} h-3 rounded-full transition-all duration-500`}
+              style={{ width: `${stats.progress}%` }}
+            ></div>
+          </div>
         </div>
       )}
 

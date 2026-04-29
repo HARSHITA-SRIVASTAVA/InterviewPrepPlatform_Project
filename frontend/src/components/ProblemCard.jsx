@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 
 const ProblemCard = ({ problem, onUpdate, setProblems }) => {
   const [actionLoading, setActionLoading] = useState(false);
+  const [notes, setNotes] = useState(problem.notes || "");
+  const [showNotes, setShowNotes] = useState(false);
 
   // Toggle solved / unsolved
   const handleToggleStatus = async () => {
@@ -82,6 +84,34 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
     }
   };
 
+  //save function
+  const handleSaveNotes = async () => {
+  try {
+    setActionLoading(true);
+
+    const token = localStorage.getItem("token");
+
+    await API.put(
+      `/tracking/${problem._id}`,
+      { notes },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    toast.success("Notes saved!");
+
+    if (onUpdate) onUpdate();
+
+    } catch (error) {
+      toast.error("Failed to save notes");
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
   return (
     <div className="bg-white p-5 rounded-2xl shadow-sm hover:shadow-lg transition">
       
@@ -125,6 +155,36 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
         </button>
       </div>
 
+      {/* NOTES */}
+      <div>
+      <button
+        onClick={() => setShowNotes(!showNotes)}
+        className="text-sm text-blue-600 mt-2">
+      {showNotes ? "Hide Notes" : "Add Notes"}
+      </button>
+      {showNotes && (
+        <div className="mt-3">
+          
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="Write your notes..."
+            className="w-full border rounded p-2 text-sm"
+            rows={3}
+          />
+
+          <button
+            onClick={handleSaveNotes}
+            disabled={actionLoading}
+            className="mt-2 bg-blue-500 text-white px-3 py-1 rounded text-sm"
+          >
+            {actionLoading ? "Saving..." : "Save Notes"}
+          </button>
+
+        </div>
+      )}
+      </div>
+
       {problem.problem?.link && (
         <a
           href={problem.problem.link}
@@ -135,6 +195,9 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
           Solve Problem →
         </a>
       )}
+
+
+
     </div>
   );
 };
