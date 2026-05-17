@@ -4,6 +4,7 @@ import StatCard from "../components/StatCard";
 import ProblemCard from "../components/ProblemCard";
 import TrackProblemForm from "../components/TrackProblemForm";
 import ActivityItem from "../components/ActivityItem";
+import {BarChart,Bar,XAxis,YAxis,Tooltip,ResponsiveContainer,CartesianGrid,Cell,} from "recharts";
 
 const Dashboard = () => {
   //State for stats (total, solved, etc.)
@@ -87,6 +88,12 @@ const Dashboard = () => {
     return "bg-green-500";
   };
 
+  const difficultyData = [
+    { name: "Easy", value: stats?.solvedDifficulty?.Easy || 0 },
+    { name: "Medium", value: stats?.solvedDifficulty?.Medium || 0 },
+    { name: "Hard", value: stats?.solvedDifficulty?.Hard || 0 },
+  ];
+
   return (
     <div className="min-h screen bg-gray-100 p-6 rounded-2xl">
       <div className="mb-6">
@@ -135,6 +142,38 @@ const Dashboard = () => {
         </div>
       )}
 
+      {/* Progess Chart */}
+      {stats && (
+     <div className="bg-white p-6 rounded-2xl shadow-md mt-6">
+      <h2 className="text-2xl font-bold mb-6">
+        Progress by Difficulty 📊
+      </h2>
+
+      <ResponsiveContainer width="100%" height={320}>
+        <BarChart data={difficultyData}>
+          
+          <CartesianGrid strokeDasharray="3 3" />
+
+          <XAxis dataKey="name" />
+
+          <YAxis allowDecimals={false} />
+
+          <Tooltip />
+
+          <Bar
+            dataKey="value"
+            radius={[10, 10, 0, 0]}
+          >
+            <Cell fill="#22c55e" />
+            <Cell fill="#f59e0b" />
+            <Cell fill="#ef4444" />
+          </Bar>
+
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+      )}
+
       {/* TRACK FORM */}
       <TrackProblemForm
         onSuccess={(newData) => {
@@ -153,11 +192,11 @@ const Dashboard = () => {
         placeholder="🔍 Search problems..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
       />
 
       {/* FILTER BUTTONS HERE */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-6">
+      <div className="flex gap-3 mb-4">
         
         <button
           onClick={() => setFilter("all")}
@@ -255,7 +294,7 @@ const Dashboard = () => {
         </div>
       ) : (
         <p className="text-gray-500">
-          No recommendations yet. Solve or track problems to get suggestions 🚀
+          You're doing great 🎉 Try exploring new problems!
         </p>
       )}
       {/* ACTIVITY SECTION */}

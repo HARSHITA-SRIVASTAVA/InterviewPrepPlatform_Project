@@ -63,6 +63,22 @@ const getDashboardStats = async (req, res) => {
       }
     });
 
+    const solvedDifficulty = {   //for progress bar
+      Easy: 0,
+      Medium: 0,
+      Hard: 0,
+    };
+
+    tracked.forEach((item) => {
+      if (item.status === "solved") {
+        const diff = item.problem?.difficulty;
+
+        if (solvedDifficulty[diff] !== undefined) {
+          solvedDifficulty[diff]++;
+        }
+      }
+    });
+
     //Find weakest area
     let weakArea = "None";
     let max = 0;
@@ -82,13 +98,42 @@ const getDashboardStats = async (req, res) => {
       weakArea = "Hard";    //user solved all
     }
 
-    //get recommended problems based on weakArea
-    const recommended = await Problem.find({
-      difficulty: weakArea,
-    }).limit(3);
+    //get tracking IDS
+    // const tracked = await Tracking.find({ user: userId }).select("problem");
+    const solvedTrackedIds = tracked.filter((t) => t.status === "solved").map((t) => t.problem?._id.toString());
 
-    const tracking = await Tracking.find({ user: userId }).populate("problem").sort({ updatedAt: -1 });    //for increasing loading speed
+    //get recommended problems
+    let recommended=await Problem.find({
+      _id:{$nin: solvedTrackedIds},   //exclude already tracked & solved
+    })
+    .limit(10);
 
+    recommended.sort((a, b) => {
+  const aTracked = tracked.some(t => t.problem._id.toString() === a._id.toString() && t.status === "unsolved");
+  const bTracked = tracked.some(t => t.problem._id.toString() === b._id.toString() && t.status === "unsolved");
+
+  return bTracked - aTracked;
+});
+
+    //prioritize easy first if no ques solved
+    const solvedCount=tracked.filter((t) => t.status === "solved").length;
+
+    if (solvedCount === 0) {
+      recommended = recommended.sort((a, b) => {
+        if (a.difficulty === "Easy") return -1;
+        if (b.difficulty === "Easy") return 1;
+        return 0;
+      });
+    }
+
+    // return top 3
+    recommended = recommended.slice(0, 3);
+
+    //for increasing loading speed
+    const tracking = tracked.sort(
+      (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+    );
+     
     // Return
     res.status(200).json({
       success: true,
@@ -101,6 +146,8 @@ const getDashboardStats = async (req, res) => {
         weakArea,   //recommendation
         recommended, //represent recommended prob
         tracking,
+        difficultyCount,   //chart
+        solvedDifficulty,
       },
     });
   } catch (error) {

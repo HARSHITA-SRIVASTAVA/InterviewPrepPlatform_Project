@@ -113,17 +113,27 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
   };
 
   return (
-    <div className="bg-white p-5 rounded-2xl shadow-sm hover:shadow-lg transition duration-300">
+    <div className="bg-white p-5 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all transition duration-300 animate-fadeIn">
       
-      {/* //left side */}
+      {/*left side */}
       
       <h3 className="font-semibold text-lg">
         {problem.problem?.title}
       </h3>
 
-      <p className="text-sm text-gray-500">
-        {problem.problem?.difficulty}
-      </p>
+      
+        <span className={`text-xs  px-3 py-1 rounded-full inline-block mt-2 ${
+          problem.problem?.difficulty === "Easy"? " text-green-700"
+          : problem.problem?.difficulty === "Medium"? "text-yellow-700"
+          : "text-red-700"
+        }`}>
+          {problem.problem?.difficulty === "Easy" && "🟢 "}
+          {problem.problem?.difficulty === "Medium" && "🟡 "}
+          {problem.problem?.difficulty === "Hard" && "🔴 "}
+          
+          {problem.problem?.difficulty}
+        </span>
+     
 
       <p className="mt-2">
         <span className={`text-xs px-3 py-1 rounded mt-2 inline-block ${
@@ -137,7 +147,7 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
         <button
           onClick={handleToggleStatus}
           disabled={actionLoading}
-          className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition"
+          className="bg-green-500 hover:bg-green-600 active:scale-95 text-white px-4 py-1 rounded text-sm transition"
         >
           {actionLoading
             ? "Updating..."
@@ -149,7 +159,7 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
         <button
           onClick={handleDelete}
           disabled={actionLoading}
-          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition"
+          className="bg-red-500 hover:bg-red-600 active:scale-95 text-white px-3 py-1 rounded text-sm transition"
         >
           {actionLoading ? "Removing..." : "Remove"}
         </button>
@@ -190,7 +200,7 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
           href={problem.problem.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-600 text-sm mt-2 inline-block hover:underline"
+          className="text-blue-600 text-sm mt-2 inline-block hover:underline hover:translate-x-1 transition"
         >
           Solve Problem →
         </a>
