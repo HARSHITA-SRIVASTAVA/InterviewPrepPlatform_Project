@@ -4,8 +4,10 @@ import { toast } from "react-toastify";
 
 const ProblemCard = ({ problem, onUpdate, setProblems }) => {
   const [actionLoading, setActionLoading] = useState(false);
+
   const [notes, setNotes] = useState(problem.notes || "");
   const [showNotes, setShowNotes] = useState(false);
+  const [savingNotes, setSavingNotes] = useState(false);
 
   // Toggle solved / unsolved
   const handleToggleStatus = async () => {
@@ -87,7 +89,7 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
   //save function
   const handleSaveNotes = async () => {
   try {
-    setActionLoading(true);
+    setSavingNotes(true);
 
     const token = localStorage.getItem("token");
 
@@ -103,16 +105,24 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
 
     toast.success("Notes saved!");
 
-    if (onUpdate) onUpdate();
+    // if (onUpdate) onUpdate();
+    setShowNotes(false);
+    
+    if(onUpdate){
+     onUpdate();
+    }
 
     } catch (error) {
       toast.error("Failed to save notes");
+      console.log(error);
     } finally {
       setActionLoading(false);
+      setSavingNotes(false);
     }
   };
 
   return (
+    <>
     <div className="bg-white p-5 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all transition duration-300 animate-fadeIn">
       
       {/*left side */}
@@ -169,30 +179,41 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
       <div>
       <button
         onClick={() => setShowNotes(!showNotes)}
-        className="text-sm text-blue-600 mt-2">
+        className="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition">
       {showNotes ? "Hide Notes" : "Add Notes"}
       </button>
+
       {showNotes && (
-        <div className="mt-3">
-          
-          <textarea
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder="Write your notes..."
-            className="w-full border rounded p-2 text-sm"
-            rows={3}
-          />
+      <div className="mt-4 p-2 animate-fadeIn">
+    
+    <textarea
+      value={notes}
+      onChange={(e) => setNotes(e.target.value)}
+      rows={6}
+      placeholder="Write your interview notes here..."
+      className="w-full border rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none bg-white"
+    />
 
-          <button
-            onClick={handleSaveNotes}
-            disabled={actionLoading}
-            className="mt-2 bg-blue-500 text-white px-3 py-1 rounded text-sm"
-          >
-            {actionLoading ? "Saving..." : "Save Notes"}
-          </button>
+    <div className="flex justify-end gap-3 mt-3">
+      
+      <button
+        onClick={() => setShowNotes(false)}
+        className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300"
+      >
+        Cancel
+      </button>
 
-        </div>
-      )}
+      <button
+        onClick={handleSaveNotes}
+        disabled={savingNotes}
+        className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white"
+      >
+        {savingNotes ? "Saving..." : "Save Notes"}
+      </button>
+
+    </div>
+  </div>
+)}
       </div>
 
       {problem.problem?.link && (
@@ -209,6 +230,7 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
 
 
     </div>
+    </>
   );
 };
 
