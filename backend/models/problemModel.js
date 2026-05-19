@@ -18,6 +18,11 @@ const problemSchema = new mongoose.Schema(
       },
     },
 
+    topic:{
+      type:String,
+      required:true,
+    },
+
     tags: {
       type: [String],
       default: [],

@@ -3,10 +3,10 @@ const Problem=require("../models/problemModel");  //import model
 //Create problem funtion*
 const createProblem=async(req,res)=>{
     try{
-        const{title,difficulty,tags,link,platform,description}=req.body;
+        const{title,difficulty,topic,tags,link,platform,description}=req.body;
 
         const problem=await Problem.create({
-            title,difficulty,tags,link,platform,description,
+            title,difficulty,topic,tags,link,platform,description,
         });
         res.status(201).json({
             success:true,

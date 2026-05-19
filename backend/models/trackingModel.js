@@ -29,6 +29,11 @@ const trackingSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+
+    lastReviewed:{
+      type:Date,
+      default:Date.now,
+    },
   },
   {
     timestamps: true,

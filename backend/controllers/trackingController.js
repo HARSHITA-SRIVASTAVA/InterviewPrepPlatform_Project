@@ -85,7 +85,14 @@ const updateTracking = async (req, res) => {
 
     const tracking = await Tracking.findOneAndUpdate(
       { _id: trackingId, user: userId },
-      req.body,
+      {
+        ...req.body,
+        ...(req.body.status=="solved" &&{
+            lastReviewed: new Date(),
+        }),
+      },
+      
+
       {
         returnDocument: "after",
         runValidators: true,

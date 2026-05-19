@@ -94,6 +94,8 @@ const Dashboard = () => {
     { name: "Hard", value: stats?.solvedDifficulty?.Hard || 0 },
   ];
 
+ // console.log(stats.dailyProgress);
+
   return (
     <div className="min-h screen bg-gray-100 p-6 rounded-2xl">
       <div className="mb-6">
@@ -139,6 +141,37 @@ const Dashboard = () => {
               style={{ width: `${stats.progress}%` }}
             ></div>
           </div>
+        </div>
+      )}
+
+      {/* Daily Goal Trcaker */}
+      {stats && (
+        <div className="bg-white rounded-2xl shadow-md p-5 mt-6">
+  
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-xl font-semibold">
+            🎯 Daily Goal
+          </h2>
+
+          <span className="text-sm text-gray-500">
+            {stats.solvedToday}/{stats.dailyGoal} Solved Today
+          </span>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+          
+          <div
+            className="bg-blue-500 h-4 rounded-full transition-all duration-500"
+            style={{ width: `${Number(stats?.dailyProgress || 0)}%`, }}
+          ></div>
+
+          </div>
+
+          <p className="text-sm text-gray-600 mt-2">
+            {Number(stats?.dailyProgress || 0)}% completed
+          </p>
+
         </div>
       )}
 

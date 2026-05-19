@@ -19,6 +19,21 @@ const getDashboardStats = async (req, res) => {
         user: userId, status: "solved", 
     }).sort({ updatedAt: -1 });  //decreasing
 
+    //daily goal tracker
+    const todayDate = new Date();
+
+    const solvedToday = solvedProblems.filter((problem) => {
+    const solvedDate = new Date(problem.updatedAt);
+      return (
+        solvedDate.getDate() === todayDate.getDate() &&
+        solvedDate.getMonth() === todayDate.getMonth() &&
+        solvedDate.getFullYear() === todayDate.getFullYear()
+      );
+    }).length;
+
+    const dailyGoal=3;
+    const dailyProgress=Number(((solvedToday/dailyGoal)*100).toFixed(0));
+
     const uniqueDates = [
       ...new Set(
         solvedProblems.map((item) =>
@@ -148,6 +163,10 @@ const getDashboardStats = async (req, res) => {
         tracking,
         difficultyCount,   //chart
         solvedDifficulty,
+
+        solvedToday,   //daily progree chart
+        dailyGoal,
+        dailyProgress,
       },
     });
   } catch (error) {

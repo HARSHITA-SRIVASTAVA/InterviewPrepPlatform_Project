@@ -15,19 +15,29 @@ const Navbar = () => {
       
       {/* Logo / Brand */}
       <h1 className="text-xl font-bold">
-        PrepTracker
+        
+        <Link to="/" className="hover:text-blue-300">
+          PrepTracker
+        </Link>
+        
       </h1>
 
       {/* Links */}
       <div className="flex items-center gap-4">
 
-        <Link to="/" className="hover:text-gray-300">
+        <Link to="/" className="hover:text-blue-300">
           Home
         </Link>
 
         {token && (
-          <Link to="/dashboard" className="hover:text-gray-300">
+          <Link to="/dashboard" className="hover:text-blue-300">
             Dashboard
+          </Link>
+        )}
+
+        {token &&(
+          <Link to="/revision" className="hover:text-blue-300">
+            Revision
           </Link>
         )}
 
