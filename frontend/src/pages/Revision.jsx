@@ -25,9 +25,36 @@ const Revision = () => {
     } catch (error) {
       console.log(error.message);
     }
-  };
+};
 
-  return (
+//for : Revisied 3 Days AGO
+const getDaysAgo=(date)=>{
+    const today=new Date();
+    const reviewDate=new Date(date);
+    const diffTime=today-reviewDate;    //ms
+
+    const diffDays=Math.floor(diffTime/(1000*60*60*24));
+
+    if(diffDays==0) return "Today";
+
+    if(diffDays==1) return "1 days ago";
+
+    return `${diffDays} days ago`;
+};
+
+//show need Rvision if not revised for 3+days
+const needsRevision=(date)=>{
+    const today=new Date();
+    const reviewDate=new Date(date);
+
+    const diffTime=today-reviewDate;
+
+    const diffDays=Math.floor(diffTime/(1000*60*60*24));
+
+    return diffDays>3;  //True if not revisied for >=3 days 
+}
+
+return (
     <div className="p-6">
 
       <h1 className="text-3xl font-bold mb-6">
@@ -42,9 +69,18 @@ const Revision = () => {
             key={item._id}
             className="bg-white p-5 rounded-2xl shadow-md">
 
-            <h2 className="text-xl font-semibold">
-              {item.problem?.title}
-            </h2>
+                {/* flex:side-by-side ,justify-between:center gap , items-start:celling */}
+            <div className="flex justify-between items-start">   
+                <h2 className="text-xl font-semibold">
+                {item.problem?.title}
+                </h2>
+
+                {needsRevision(item.lastReviewed) && (  //if false stop reading immediately 
+                    <span  className="bg-red-100 text-red-600 text-xs px-3 py-1 rounded-full">
+                        🔥 Needs Revision
+                    </span>
+                )}
+            </div>
 
             <p className="text-gray-500 mt-1">
               {item.problem?.difficulty}
@@ -55,12 +91,13 @@ const Revision = () => {
             </p>
 
             <p className="font-medium">
-              {new Date(item.lastReviewed).toLocaleDateString("en-GB")}  
-               {/* en-GB: for dd/mm/year format */}
+                {new Date(item.lastReviewed).toLocaleDateString("en-GB")}
+                {" • "}
+                {getDaysAgo(item.lastReviewed)}
             </p>
 
-          </div>
-        ))}
+        </div>
+    ))}
       </div>
     </div>
   );
