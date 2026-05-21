@@ -92,7 +92,6 @@ const updateTracking = async (req, res) => {
         }),
       },
       
-
       {
         returnDocument: "after",
         runValidators: true,

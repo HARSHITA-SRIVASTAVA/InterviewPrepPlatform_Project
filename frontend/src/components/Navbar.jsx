@@ -41,6 +41,12 @@ const Navbar = () => {
           </Link>
         )}
 
+        {token &&(
+          <Link to="/analytics" className="hover:text-blue-300">
+            Analytics
+          </Link>
+        )}
+
         {/* <button
           onClick={() => setDarkMode(!darkMode)}
           className="bg-gray-700 px-3 py-1 rounded">
@@ -62,6 +68,8 @@ const Navbar = () => {
           >
             Login
           </Link>
+
+
         )}
       </div>
     </nav>

@@ -84,15 +84,27 @@ const getDashboardStats = async (req, res) => {
       Hard: 0,
     };
 
+    //XP system
+    let xp=0;
+    
     tracked.forEach((item) => {
       if (item.status === "solved") {
         const diff = item.problem?.difficulty;
 
+        //xp
+        if(diff=="Easy") xp+=10;
+        if(diff=="Medium") xp+=20;
+        if(diff=="Hard")xp+=40;
         if (solvedDifficulty[diff] !== undefined) {
           solvedDifficulty[diff]++;
         }
       }
     });
+
+    //level System
+      const level =Math.floor(xp/100)+1;
+      const currentLevelXP=xp%100;
+      const xpNeeded=100;
 
     //Find weakest area
     let weakArea = "None";
@@ -123,15 +135,15 @@ const getDashboardStats = async (req, res) => {
     })
     .limit(10);
 
-    recommended.sort((a, b) => {
-  const aTracked = tracked.some(t => t.problem._id.toString() === a._id.toString() && t.status === "unsolved");
-  const bTracked = tracked.some(t => t.problem._id.toString() === b._id.toString() && t.status === "unsolved");
+      recommended.sort((a, b) => {
+    const aTracked = tracked.some(t => t.problem._id.toString() === a._id.toString() && t.status === "unsolved");
+    const bTracked = tracked.some(t => t.problem._id.toString() === b._id.toString() && t.status === "unsolved");
 
-  return bTracked - aTracked;
-});
+    return bTracked - aTracked;
+  });
 
-    //prioritize easy first if no ques solved
-    const solvedCount=tracked.filter((t) => t.status === "solved").length;
+      //prioritize easy first if no ques solved
+  const solvedCount=tracked.filter((t) => t.status === "solved").length;
 
     if (solvedCount === 0) {
       recommended = recommended.sort((a, b) => {
@@ -141,34 +153,75 @@ const getDashboardStats = async (req, res) => {
       });
     }
 
-    // return top 3
+      // return top 3
     recommended = recommended.slice(0, 3);
 
-    //for increasing loading speed
-    const tracking = tracked.sort(
-      (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
-    );
-     
-    // Return
-    res.status(200).json({
-      success: true,
-      data: {
-        total,
-        solved,
-        unsolved,
-        progress,
-        streak,
-        weakArea,   //recommendation
-        recommended, //represent recommended prob
-        tracking,
-        difficultyCount,   //chart
-        solvedDifficulty,
+  //for increasing loading speed
+  const tracking = tracked.sort(
+    (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+  );
 
-        solvedToday,   //daily progree chart
-        dailyGoal,
-        dailyProgress,
-      },
+  // Topic-wise solved count
+const topicCount = {};
+
+tracked.forEach((item) => {
+
+  if (item.status === "solved") {
+    const tags = item.problem?.tags || [];
+    tags.forEach((tag) => {
+      const splitTags = tag.split(",");
+      splitTags.forEach((singleTag) => {
+        const cleanTag = singleTag.trim();
+        topicCount[cleanTag] =
+          (topicCount[cleanTag] || 0) + 1;
+      });
     });
+  }
+});
+
+//weekly solved trend
+const weeklyData={};
+tracked.forEach((item)=>{
+  if(item.status=="solved"){
+   
+    const days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat",];
+    const date=days[
+      new Date(item.updatedAt).getDay()
+    ];
+    
+    weeklyData[date]=(weeklyData[date] || 0)+1;
+  }
+});
+      
+
+  // Return
+  res.status(200).json({
+    success: true,
+    data: {
+      total,
+      solved,
+      unsolved,
+      progress,
+      streak,
+      weakArea,   //recommendation
+      recommended, //represent recommended prob
+      tracking,
+      difficultyCount,   //chart
+      solvedDifficulty,
+
+      topicCount,    //analytics
+      weeklyData,
+
+      xp,         //xp
+      level,
+      currentLevelXP,
+      xpNeeded,
+
+      solvedToday,   //daily progree chart
+      dailyGoal,
+      dailyProgress,
+    },
+  });
   } catch (error) {
     res.status(500).json({
       success: false,

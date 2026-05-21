@@ -108,6 +108,7 @@ const Dashboard = () => {
 </    div>
 
       {/* STATS SECTION */}
+      
       {stats ? (
         <div className="flex gap-6 flex-wrap">
           <StatCard title="Total Problems" value={stats.total} />
@@ -120,6 +121,36 @@ const Dashboard = () => {
       ) : (
         <p className="text-gray-500">Loading stats...</p>
       )}
+
+      {/* XP section */}
+      {stats && (
+      <div className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-2xl shadow-lg p-6 mt-6">
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-2xl font-bold">
+              🏆 Level {stats.level}
+            </h2>
+
+            <p className="mt-2 text-purple-100">
+              Total XP: {stats.xp}
+            </p>
+          </div>
+          <div className="text-right">
+          <p className="text-sm text-purple-100 mb-2">
+            {stats.currentLevelXP}/{stats.xpNeeded} XP
+          </p>
+          <div className="w-48 bg-purple-300 rounded-full h-4 overflow-hidden">
+            <div
+              className="bg-white h-4 rounded-full transition-all duration-500"
+              style={{
+                width: `${(stats.currentLevelXP / stats.xpNeeded) * 100}%`,
+              }}
+            ></div>
+          </div>
+          </div>
+        </div>
+      </div>
+    )}
 
       {/* progress bar */}
       {stats && (

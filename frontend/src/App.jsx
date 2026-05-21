@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/Navbar";
 import Revision from "./pages/Revision";
+import Analytics from "./pages/Analytics";
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
         </Route>
 
         <Route path="/revision" element={<Revision />}/>
+
+        <Route path="/analytics" element={<Analytics />}/>
+        
       </Routes>
     </>
   );

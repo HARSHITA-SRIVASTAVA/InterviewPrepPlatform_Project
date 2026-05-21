@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";  //react hook
-import API from "../api/axios";               //send Http request
+import API from "../api/axios";    //send Http request
+
+import { toast } from "react-toastify";  //for notification 
 
 const Revision = () => {
 
@@ -20,17 +22,53 @@ const Revision = () => {
         },
       });
 
-      setProblems(res.data.data);
+    //setProblems(res.data.data);
+
+    //sort problems
+    const sortedProblems=res.data.data.sort(
+        (a,b)=>
+            new Date(a.lastReviewed)-new Date(b.lastReviewed)  //comparator
+    );
+    setProblems(sortedProblems);
+
 
     } catch (error) {
-      console.log(error.message);
+      toast.error("Failed to update revision");
     }
+};
+
+//Adding Mark as Revised button 
+const handleRevision = async (trackingId) => {
+  try {
+    const token = localStorage.getItem("token");
+    await API.put(
+      `/tracking/${trackingId}`,
+      {
+        status: "solved",   //mark as solved 
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+     toast.success("Problem revised successfully!");
+    fetchRevisionProblems();
+
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 //for : Revisied 3 Days AGO
 const getDaysAgo=(date)=>{
     const today=new Date();
     const reviewDate=new Date(date);
+
+    //remove time part 
+    today.setHours(0,0,0,0);
+    reviewDate.setHours(0,0,0,0);
+    
     const diffTime=today-reviewDate;    //ms
 
     const diffDays=Math.floor(diffTime/(1000*60*60*24));
@@ -95,6 +133,12 @@ return (
                 {" • "}
                 {getDaysAgo(item.lastReviewed)}
             </p>
+
+            <button 
+            onClick={() => handleRevision(item._id)}
+            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm transition">
+                ✅ Mark Revised
+            </button>
 
         </div>
     ))}
