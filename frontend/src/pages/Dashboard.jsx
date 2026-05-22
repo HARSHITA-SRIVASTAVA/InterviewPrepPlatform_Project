@@ -152,6 +152,32 @@ const Dashboard = () => {
       </div>
     )}
 
+    {stats && (
+
+  <div className="bg-white rounded-2xl shadow-md p-6 mt-6">
+
+    <h2 className="text-2xl font-bold mb-5">
+      🏅 Achievements
+    </h2>
+
+    <div className="flex flex-wrap gap-4">
+
+      {stats.achievements.map((badge, index) => (
+
+        <div
+          key={index}
+          className="bg-yellow-100 text-yellow-800 px-4 py-3 rounded-xl font-semibold shadow-sm"
+        >
+          {badge}
+        </div>
+
+      ))}
+
+    </div>
+
+  </div>
+)}
+
       {/* progress bar */}
       {stats && (
         <div className="mt-6 bg-white p-6 rounded-2xl shadow-md">

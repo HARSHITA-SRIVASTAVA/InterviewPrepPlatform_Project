@@ -106,6 +106,18 @@ const getDashboardStats = async (req, res) => {
       const currentLevelXP=xp%100;
       const xpNeeded=100;
 
+    //Achievment badges
+    const achievements=[];
+    if(solved>=1)
+        achievements.push("🚀 Beginner");
+    else if(solved>=5)
+      achievements.push("🔥 Problem Solver");
+
+    if(xp>=100)
+        achievements.push("🏆 XP Master");
+    if(streak>=7)
+      achievements.push("⚡ Consistent Coder");
+
     //Find weakest area
     let weakArea = "None";
     let max = 0;
@@ -216,6 +228,8 @@ tracked.forEach((item)=>{
       level,
       currentLevelXP,
       xpNeeded,
+
+      achievements,
 
       solvedToday,   //daily progree chart
       dailyGoal,
