@@ -30,6 +30,9 @@ const Dashboard = () => {
   //add notes
   const [notes , setNotes]=useState("");
 
+  //for filter serach by difficulty
+  const [difficultyFilter , setDifficultyFilter] = useState("All");
+
   // Fetch dashboard data
   const fetchDashboard = async () => {
     try {
@@ -79,7 +82,10 @@ const Dashboard = () => {
 
     const matchesSearch = p.problem.title?.toLowerCase().includes(search.toLowerCase());
 
-    return matchesFilter && matchesSearch;
+    //difficulty filter
+    const matchesDifficulty=difficultyFilter=="All" || p.problem.difficulty === difficultyFilter;
+
+    return matchesFilter && matchesSearch && matchesDifficulty ;
   });
 
   const getColor = () => {
@@ -154,7 +160,7 @@ const Dashboard = () => {
 
     {stats && (
 
-  <div className="bg-white rounded-2xl shadow-md p-6 mt-6">
+  <div className="bg-gradient-to-r from-purple-300 to-indigo-400 rounded-2xl shadow-md p-6 mt-6">
 
     <h2 className="text-2xl font-bold mb-5">
       🏅 Achievements
@@ -183,7 +189,7 @@ const Dashboard = () => {
         <div className="mt-6 bg-white p-6 rounded-2xl shadow-md">
           <div className="flex justify-between mb-2">
             <span className="text-gray-600 font-medium">
-              Progress
+              ⏳ Progress
             </span>
             <span className="font-semibold">
               {stats.progress}%
@@ -263,7 +269,7 @@ const Dashboard = () => {
       </ResponsiveContainer>
     </div>
       )}
-
+      
       {/* TRACK FORM */}
       <TrackProblemForm
         onSuccess={(newData) => {
@@ -271,11 +277,11 @@ const Dashboard = () => {
           fetchDashboard();         
         }}
       />
+
       {/*  TRACKED PROBLEMS */}
       <h2 className="text-xl font-bold mt-8 mb-4">
         Tracked Problems
       </h2>
-      
       
       <input
         type="text"
@@ -285,37 +291,64 @@ const Dashboard = () => {
         className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
       />
 
+      
+
       {/* FILTER BUTTONS HERE */}
-      <div className="flex gap-3 mb-4">
-        
-        <button
-          onClick={() => setFilter("all")}
-          className={`px-3 py-1 rounded ${
-            filter === "all" ? "bg-blue-500 text-white" : "bg-gray-200"
-          }`}
-        >
-          All
-        </button>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
 
-        <button
-          onClick={() => setFilter("solved")}
-          className={`px-3 py-1 rounded ${
-            filter === "solved" ? "bg-green-500 text-white" : "bg-gray-200"
-          }`}
-        >
-          Solved
-        </button>
+  {/* Status Filter Buttons */}
+  <div className="flex gap-3 bg">
 
-        <button
-          onClick={() => setFilter("unsolved")}
-          className={`px-3 py-1 rounded ${
-            filter === "unsolved" ? "bg-yellow-500 text-white" : "bg-gray-200"
-          }`}
-        >
-          Unsolved
-        </button>
+    <button
+      onClick={() => setFilter("all")}
+      className={` border border-gray-300 px-4 py-2 rounded-xl font-medium transition ${
+        filter === "all"
+          ? "bg-blue-500 text-white shadow-md"
+          : "bg-gray-100 hover:bg-gray-200"
+      }`}
+    >
+      All
+    </button>
 
-      </div>
+    <button
+      onClick={() => setFilter("solved")}
+      className={` border border-gray-300 px-4 py-2 rounded-xl font-medium transition ${
+        filter === "solved"
+          ? "bg-green-500 text-white shadow-md"
+          : "bg-gray-100 hover:bg-gray-200"
+      }`}
+    >
+      Solved
+    </button>
+
+    <button
+      onClick={() => setFilter("unsolved")}
+      className={` border border-gray-300 px-4 py-2 rounded-xl font-medium transition ${
+        filter === "unsolved"
+          ? "bg-yellow-500 text-white shadow-md"
+          : "bg-gray-100 hover:bg-gray-200"
+      }`}
+    >
+      Unsolved
+    </button>
+
+  </div>
+
+  {/* Difficulty Dropdown */}
+  <select
+    value={difficultyFilter}
+    onChange={(e) =>
+      setDifficultyFilter(e.target.value)
+    }
+    className="border border-gray-300 px-4 py-2 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+  >
+    <option value="All">All Difficulties</option>
+    <option value="Easy">Easy</option>
+    <option value="Medium">Medium</option>
+    <option value="Hard">Hard</option>
+  </select>
+
+</div>
 
       {/*  PROBLEMS LIST */}
       {filteredProblems.length > 0 ? (
