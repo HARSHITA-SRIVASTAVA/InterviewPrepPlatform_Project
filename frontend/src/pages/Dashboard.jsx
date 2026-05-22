@@ -33,6 +33,9 @@ const Dashboard = () => {
   //for filter serach by difficulty
   const [difficultyFilter , setDifficultyFilter] = useState("All");
 
+  //for filter serach by tags(Array,LL,string..)
+  const [tagFilter,setTagFilter]=useState("All");  
+
   // Fetch dashboard data
   const fetchDashboard = async () => {
     try {
@@ -85,7 +88,12 @@ const Dashboard = () => {
     //difficulty filter
     const matchesDifficulty=difficultyFilter=="All" || p.problem.difficulty === difficultyFilter;
 
-    return matchesFilter && matchesSearch && matchesDifficulty ;
+    //tag filter
+    const matchesTag=tagFilter=="All" || p.problem.tags?.some(
+      (tag)=>tag.toLowerCase().includes(tagFilter.toLowerCase())
+    );
+
+    return matchesFilter && matchesSearch && matchesDifficulty && matchesTag;
   });
 
   const getColor = () => {
@@ -296,59 +304,75 @@ const Dashboard = () => {
       {/* FILTER BUTTONS HERE */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
 
-  {/* Status Filter Buttons */}
-  <div className="flex gap-3 bg">
+        {/* Status Filter Buttons */}
+        <div className="flex gap-3 bg">
 
-    <button
-      onClick={() => setFilter("all")}
-      className={` border border-gray-300 px-4 py-2 rounded-xl font-medium transition ${
-        filter === "all"
-          ? "bg-blue-500 text-white shadow-md"
-          : "bg-gray-100 hover:bg-gray-200"
-      }`}
-    >
-      All
-    </button>
+          <button
+            onClick={() => setFilter("all")}
+            className={` border border-gray-300 px-4 py-2 rounded-xl font-medium transition ${
+              filter === "all"
+                ? "bg-blue-500 text-white shadow-md"
+                : "bg-gray-100 hover:bg-gray-200"
+            }`}
+          >
+            All
+          </button>
 
-    <button
-      onClick={() => setFilter("solved")}
-      className={` border border-gray-300 px-4 py-2 rounded-xl font-medium transition ${
-        filter === "solved"
-          ? "bg-green-500 text-white shadow-md"
-          : "bg-gray-100 hover:bg-gray-200"
-      }`}
-    >
-      Solved
-    </button>
+          <button
+            onClick={() => setFilter("solved")}
+            className={` border border-gray-300 px-4 py-2 rounded-xl font-medium transition ${
+              filter === "solved"
+                ? "bg-green-500 text-white shadow-md"
+                : "bg-gray-100 hover:bg-gray-200"
+            }`}
+          >
+            Solved
+          </button>
 
-    <button
-      onClick={() => setFilter("unsolved")}
-      className={` border border-gray-300 px-4 py-2 rounded-xl font-medium transition ${
-        filter === "unsolved"
-          ? "bg-yellow-500 text-white shadow-md"
-          : "bg-gray-100 hover:bg-gray-200"
-      }`}
-    >
-      Unsolved
-    </button>
+          <button
+            onClick={() => setFilter("unsolved")}
+            className={` border border-gray-300 px-4 py-2 rounded-xl font-medium transition ${
+              filter === "unsolved"
+                ? "bg-yellow-500 text-white shadow-md"
+                : "bg-gray-100 hover:bg-gray-200"
+            }`}
+          >
+            Unsolved
+          </button>
 
-  </div>
+        </div>
 
-  {/* Difficulty Dropdown */}
-  <select
-    value={difficultyFilter}
-    onChange={(e) =>
-      setDifficultyFilter(e.target.value)
-    }
-    className="border border-gray-300 px-4 py-2 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-  >
-    <option value="All">All Difficulties</option>
-    <option value="Easy">Easy</option>
-    <option value="Medium">Medium</option>
-    <option value="Hard">Hard</option>
-  </select>
+        <div className="flex gap-3">
 
-</div>
+          {/* Difficulty Dropdown */}
+          <select
+            value={difficultyFilter}
+            onChange={(e) =>
+              setDifficultyFilter(e.target.value)
+            }
+            className="border border-gray-300 px-4 py-2 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="All">All Difficulties</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+
+          {/* Tag Dropdown filter */}
+          <select value={tagFilter} onChange={(e)=>setTagFilter(e.target.value)} 
+            className="border border-gray-300 px-4 py-2 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+            
+              <option value="All">All Tags</option>
+
+              <option value="Array">Array</option>
+              <option value="Stack">Stack</option>
+              <option value="HashMap">HashMap</option>
+              <option value="Sorting">Sorting</option>
+              <option value="Tree">Tree</option>
+          </select>
+        </div>
+
+      </div>
 
       {/*  PROBLEMS LIST */}
       {filteredProblems.length > 0 ? (
