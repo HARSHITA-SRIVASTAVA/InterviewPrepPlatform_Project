@@ -176,9 +176,14 @@ const getDashboardStats = async (req, res) => {
   // Topic-wise solved count
 const topicCount = {};
 
+//heatMap Data
+const heatmapData={};
+
 tracked.forEach((item) => {
 
   if (item.status === "solved") {
+
+    //tags
     const tags = item.problem?.tags || [];
     tags.forEach((tag) => {
       const splitTags = tag.split(",");
@@ -188,6 +193,11 @@ tracked.forEach((item) => {
           (topicCount[cleanTag] || 0) + 1;
       });
     });
+
+    //heatMap
+    const solvedDate=new Date(item.updatedAt).toISOString().split("T")[0];
+
+    heatmapData[solvedDate]=(heatmapData[solvedDate] || 0)+1;
   }
 });
 
@@ -234,6 +244,8 @@ tracked.forEach((item)=>{
       solvedToday,   //daily progree chart
       dailyGoal,
       dailyProgress,
+
+      heatmapData,
     },
   });
   } catch (error) {
