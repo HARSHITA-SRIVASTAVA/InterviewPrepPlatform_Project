@@ -393,7 +393,7 @@ const Dashboard = () => {
       </div>
 
       {/*  TRACKED PROBLEMS */}
-      <h2 className="text-xl font-bold mt-8 mb-4">
+      <h2 className="text-2xl font-bold mb-6 mt-6">
         Tracked Problems
       </h2>
       
@@ -402,7 +402,7 @@ const Dashboard = () => {
         placeholder="🔍 Search problems..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+        className="w-full mb-6 px-5 py-3 border rounded-2xl border-gray-200 bg-white text-gray-700 placeholder:text-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
       />
 
       
@@ -411,14 +411,14 @@ const Dashboard = () => {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
 
         {/* Status Filter Buttons */}
-        <div className="flex gap-3 bg">
+        <div className="flex gap-2 p-1 bg-gray-100 rounded-xl w-fit">
 
           <button
             onClick={() => setFilter("all")}
-            className={` border border-gray-300 px-4 py-2 rounded-xl font-medium transition ${
+            className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
               filter === "all"
-                ? "bg-blue-500 text-white shadow-md"
-                : "bg-gray-100 hover:bg-gray-200"
+                ? "bg-purple-600 text-white shadow-sm"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             }`}
           >
             All
@@ -426,9 +426,9 @@ const Dashboard = () => {
 
           <button
             onClick={() => setFilter("solved")}
-            className={` border border-gray-300 px-4 py-2 rounded-xl font-medium transition ${
+            className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
               filter === "solved"
-                ? "bg-green-500 text-white shadow-md"
+                ? "bg-purple-600 text-white shadow-sm"
                 : "bg-gray-100 hover:bg-gray-200"
             }`}
           >
@@ -437,9 +437,9 @@ const Dashboard = () => {
 
           <button
             onClick={() => setFilter("unsolved")}
-            className={` border border-gray-300 px-4 py-2 rounded-xl font-medium transition ${
+            className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
               filter === "unsolved"
-                ? "bg-yellow-500 text-white shadow-md"
+                ? "bg-purple-600 text-white shadow-sm"
                 : "bg-gray-100 hover:bg-gray-200"
             }`}
           >
@@ -448,7 +448,7 @@ const Dashboard = () => {
 
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-2">
 
           {/* Difficulty Dropdown */}
           <select
@@ -456,7 +456,7 @@ const Dashboard = () => {
             onChange={(e) =>
               setDifficultyFilter(e.target.value)
             }
-            className="border border-gray-300 px-4 py-2 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border border-gray-300 px-4 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
           >
             <option value="All">All Difficulties</option>
             <option value="Easy">Easy</option>
@@ -466,7 +466,7 @@ const Dashboard = () => {
 
           {/* Tag Dropdown filter */}
           <select value={tagFilter} onChange={(e)=>setTagFilter(e.target.value)} 
-            className="border border-gray-300 px-4 py-2 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+            className="border border-gray-300 px-4 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all">
             
               <option value="All">All Tags</option>
 

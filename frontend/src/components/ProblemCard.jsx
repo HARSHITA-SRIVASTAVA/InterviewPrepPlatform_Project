@@ -132,17 +132,17 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
       </h3>
 
       
-        <span className={`text-xs  px-3 py-1 rounded-full inline-block mt-2 ${
-          problem.problem?.difficulty === "Easy"? " text-green-700"
-          : problem.problem?.difficulty === "Medium"? "text-yellow-700"
-          : "text-red-700"
-        }`}>
-          {problem.problem?.difficulty === "Easy" && "🟢 "}
-          {problem.problem?.difficulty === "Medium" && "🟡 "}
-          {problem.problem?.difficulty === "Hard" && "🔴 "}
-          
-          {problem.problem?.difficulty}
-        </span>
+      <span className={`text-xs  px-3 py-1 rounded-full inline-block mt-2 ${
+        problem.problem?.difficulty === "Easy"? " text-green-700"
+        : problem.problem?.difficulty === "Medium"? "text-yellow-700"
+        : "text-red-700"
+      }`}>
+        {problem.problem?.difficulty === "Easy" && "🟢 "}
+        {problem.problem?.difficulty === "Medium" && "🟡 "}
+        {problem.problem?.difficulty === "Hard" && "🔴 "}
+        
+        {problem.problem?.difficulty}
+      </span>
      
 
       <p className="mt-2">
