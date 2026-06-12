@@ -4,7 +4,18 @@ import StatCard from "../components/StatCard";
 import ProblemCard from "../components/ProblemCard";
 import TrackProblemForm from "../components/TrackProblemForm";
 import ActivityItem from "../components/ActivityItem";
-import {BarChart,Bar,XAxis,YAxis,Tooltip,ResponsiveContainer,CartesianGrid,Cell,} from "recharts";
+
+//navbar
+import { useNavigate } from "react-router-dom";
+
+//sidebar
+import Sidebar from "../components/Sidebar";
+
+//header
+import Header from "../components/Header";
+
+//progress chart
+import {ResponsiveContainer,PieChart,Pie,Cell,Tooltip,}from "recharts";
 
 const Dashboard = () => {
   //State for stats (total, solved, etc.)
@@ -35,6 +46,8 @@ const Dashboard = () => {
 
   //for filter serach by tags(Array,LL,string..)
   const [tagFilter,setTagFilter]=useState("All");  
+
+  const navigate = useNavigate();
 
   // Fetch dashboard data
   const fetchDashboard = async () => {
@@ -111,140 +124,204 @@ const Dashboard = () => {
  // console.log(stats.dailyProgress);
 
   return (
-    <div className="min-h screen bg-gray-100 p-6 rounded-2xl">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">
-          Dashboard
+    <div className="flex bg-slate-50 min-h-screen">
+        <Sidebar />
+        <div className="flex-1 flex flex-col">
+          <Header level={stats?.level || 1} />
+        <main className="flex-1 p-6">
+
+      {stats && (
+  <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 rounded-3xl p-8 text-white shadow-xl">
+
+    <div className="flex justify-between items-start">
+
+      {/* Left Side */}
+
+      <div>
+
+        <h1 className="text-4xl font-bold mb-2">
+          Welcome Back 👋
         </h1>
-        <p className="text-gray-500 text-sm mt-1">
-          Track your coding progress 🚀
+
+        <p className="text-purple-100 text-lg">
+          Keep solving, you're building consistency every day.
         </p>
-</    div>
+
+        <div className="flex gap-8 mt-6">
+
+          <div>
+            <p className="text-purple-200 text-sm">
+              Level
+            </p>
+
+            <p className="text-2xl font-bold">
+              {stats.level}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-purple-200 text-sm">
+              XP
+            </p>
+
+            <p className="text-2xl font-bold">
+              {stats.xp}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-purple-200 text-sm">
+              Next Level
+            </p>
+
+            <p className="text-2xl font-bold">
+              {stats.xpNeeded - stats.currentLevelXP}
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* Right Side Buttons */}
+
+      <div className="flex gap-3">
+
+        <button className="bg-white text-purple-700 font-semibold px-5 py-3 rounded-xl hover:bg-purple-50 transition"
+          onClick={()=> document.getElementById("tracked-problems")
+            ?.scrollIntoView({
+              behavior: "smooth",
+            })
+          }
+        >
+          Track Problem
+        </button>
+
+        <button className="bg-purple-800 px-5 py-3 rounded-xl hover:bg-purple-900 transition"
+          onClick={() => navigate("/revision")}
+          className="bg-purple-800 px-5 py-3 rounded-xl"
+        >
+          Start Revision
+        </button>
+
+      </div>
+
+    </div>
+
+    {/* Progress Bar */}
+
+    <div className="mt-8">
+      <div className="flex justify-between mb-2 text-sm text-purple-100">
+        <span>
+          Level Progress
+        </span>
+        <span>
+          {stats.currentLevelXP}/{stats.xpNeeded}
+        </span>
+      </div>
+      <div className="h-4 bg-purple-300 rounded-full overflow-hidden">
+        <div
+          className="bg-white h-4 rounded-full transition-all duration-700"
+          style={{
+            width: `${
+              (stats.currentLevelXP /
+                stats.xpNeeded) *
+              100
+            }%`,
+          }}
+        />
+              </div>
+            </div>
+          </div>
+        )}
 
       {/* STATS SECTION */}
       
       {stats ? (
-        <div className="flex gap-6 flex-wrap">
-          <StatCard title="Total Problems" value={stats.total} />
-          <StatCard title="Solved" value={stats.solved} />
-          <StatCard title="Unsolved" value={stats.unsolved} />
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 mt-6">
+          <StatCard title="Total Problems" value={stats.total} icon="📚" iconBg="bg-purple-100" />
+          <StatCard title="Solved" value={stats.solved} icon="✅" iconBg="bg-green-100" />
+          <StatCard title="Unsolved" value={stats.unsolved} icon="⏳" iconBg="bg-orange-100"/>
           {/* <StatCard title="Progress (%)" value={stats.progress} /> */}
-          <StatCard title="Streak 🔥" value={stats.streak} />
-          <StatCard title="Focus Area 🎯" value={stats.weakArea} />
+          <StatCard title="Streak" value={stats.streak} icon="🔥" iconBg="bg-red-100"/>
+          <StatCard title="Focus Area" value={stats.weakArea}  icon="🎯" iconBg="bg-pink-100"/>
         </div>
       ) : (
         <p className="text-gray-500">Loading stats...</p>
       )}
 
-      {/* XP section */}
-      {stats && (
-      <div className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-2xl shadow-lg p-6 mt-6">
-        <div className="flex justify-between items-center">
-          <div>
-            <h2 className="text-2xl font-bold">
-              🏆 Level {stats.level}
-            </h2>
 
-            <p className="mt-2 text-purple-100">
-              Total XP: {stats.xp}
-            </p>
+    {stats && (
+      <div className="mt-8">
+        <h2 className="text-2xl font-bold mb-5">
+          Progress Overview
+        </h2>
+        <div className="grid grid-cols-12 gap-6">
+
+          {/* Achievement */}
+          <div className="col-span-12 lg:col-span-3 bg-white rounded-2xl p-6 shadow-sm border">
+            <h3 className="font-semibold text-lg mb-4">
+              🏅 Achievements
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              {stats.achievements.map((badge,index) => (
+                <div
+                  key={index}
+                  className="bg-yellow-100 text-yellow-800 px-3 py-2 rounded-xl text-sm font-semibold w-fit"
+                >
+                  {badge}
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="text-right">
-          <p className="text-sm text-purple-100 mb-2">
-            {stats.currentLevelXP}/{stats.xpNeeded} XP
-          </p>
-          <div className="w-48 bg-purple-300 rounded-full h-4 overflow-hidden">
-            <div
-              className="bg-white h-4 rounded-full transition-all duration-500"
-              style={{
-                width: `${(stats.currentLevelXP / stats.xpNeeded) * 100}%`,
-              }}
-            ></div>
+
+          {/* level progress*/}
+          <div className="col-span-12 lg:col-span-6 bg-white rounded-2xl p-6 shadow-sm border">
+            <h3 className="font-semibold text-lg mb-4">
+              🏆 Level Progress
+            </h3>
+            <div className="flex justify-between mb-2">
+              <span>Level {stats.level}</span>
+              <span>{stats.progress}%</span>
+            </div>
+            <div className="w-full bg-gray-200 h-3 rounded-full">
+              <div
+                className={`${getColor()} h-3 rounded-full`}
+                style={{
+                  width: `${stats.progress}%`,
+                }}
+              />
+            </div>
           </div>
-          </div>
+
+          {/* Daily Goal*/}
+          <div className="col-span-12 lg:col-span-3 bg-white rounded-2xl p-6 shadow-sm border">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-semibold text-lg">
+                🎯 Daily Goal
+              </h3>
+              <span className="text-sm text-gray-500">
+                {stats.solvedToday}/{stats.dailyGoal} Solved Today
+              </span>
+            </div>
+
+            {/* Progress Bar */}
+            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+              
+              <div
+                className="bg-blue-500 h-3 rounded-full transition-all duration-500"
+                style={{ width: `${Number(stats?.dailyProgress || 0)}%`, }}
+              ></div>
+
+              </div>
+              <p className="mt-3 text-sm text-gray-600">
+                {Number(stats?.dailyProgress || 0)}% completed
+              </p>
+
+            </div>
         </div>
       </div>
     )}
-
-    {stats && (
-
-  <div className="bg-gradient-to-r from-purple-300 to-indigo-400 rounded-2xl shadow-md p-6 mt-6">
-
-    <h2 className="text-2xl font-bold mb-5">
-      🏅 Achievements
-    </h2>
-
-    <div className="flex flex-wrap gap-4">
-
-      {stats.achievements.map((badge, index) => (
-
-        <div
-          key={index}
-          className="bg-yellow-100 text-yellow-800 px-4 py-3 rounded-xl font-semibold shadow-sm"
-        >
-          {badge}
-        </div>
-
-      ))}
-
-    </div>
-
-  </div>
-)}
-
-      {/* progress bar */}
-      {stats && (
-        <div className="mt-6 bg-white p-6 rounded-2xl shadow-md">
-          <div className="flex justify-between mb-2">
-            <span className="text-gray-600 font-medium">
-              ⏳ Progress
-            </span>
-            <span className="font-semibold">
-              {stats.progress}%
-            </span>
-          </div>
-          {/* BAR CONTAINER */}
-          <div className="w-full bg-gray-200 h-3 rounded-full">
-
-            {/* FILLED BAR */}
-            <div
-              className={`${getColor()} h-3 rounded-full transition-all duration-500`}
-              style={{ width: `${stats.progress}%` }}
-            ></div>
-          </div>
-        </div>
-      )}
-
-      {/* Daily Goal Trcaker */}
-      {stats && (
-        <div className="bg-white rounded-2xl shadow-md p-5 mt-6">
-  
-        <div className="flex justify-between items-center mb-3">
-          <h2 className="text-xl font-semibold">
-            🎯 Daily Goal
-          </h2>
-
-          <span className="text-sm text-gray-500">
-            {stats.solvedToday}/{stats.dailyGoal} Solved Today
-          </span>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
-          
-          <div
-            className="bg-blue-500 h-4 rounded-full transition-all duration-500"
-            style={{ width: `${Number(stats?.dailyProgress || 0)}%`, }}
-          ></div>
-
-          </div>
-
-          <p className="text-sm text-gray-600 mt-2">
-            {Number(stats?.dailyProgress || 0)}% completed
-          </p>
-
-        </div>
-      )}
 
       {/* Progess Chart */}
       {stats && (
@@ -253,38 +330,67 @@ const Dashboard = () => {
         Progress by Difficulty 📊
       </h2>
 
-      <ResponsiveContainer width="100%" height={320}>
-        <BarChart data={difficultyData}>
-          
-          <CartesianGrid strokeDasharray="3 3" />
+      <div className="flex flex-col lg:flex-row items-center gap-8">
+      <div className="w-full lg:w-1/2 h-[320px]">
 
-          <XAxis dataKey="name" />
+      <PieChart width={350} height={320}>
+        <Pie
+          data={difficultyData}
+          cx="50%"
+          cy="50%"
+          innerRadius={70}
+          outerRadius={110}
+          dataKey="value"
+          paddingAngle={4}>
+          <Cell fill="#22c55e" />
+          <Cell fill="#f59e0b" />
+          <Cell fill="#ef4444" />
+        </Pie>
+        <Tooltip />
+      </PieChart>
+      </div>
 
-          <YAxis allowDecimals={false} />
+      <div className="space-y-4 w-full lg:w-1/2">
+        <div className="flex justify-between p-4 rounded-xl bg-green-50">
+          <span className="font-medium text-green-700">
+            Easy
+          </span>
+          <span>
+            {difficultyData[0]?.value} solved
+          </span>
+        </div>
 
-          <Tooltip />
+        <div className="flex justify-between p-4 rounded-xl bg-amber-50">
+          <span className="font-medium text-amber-700">
+            Medium
+          </span>
+          <span>
+            {difficultyData[1]?.value} solved
+          </span>
+        </div>
 
-          <Bar
-            dataKey="value"
-            radius={[10, 10, 0, 0]}
-          >
-            <Cell fill="#22c55e" />
-            <Cell fill="#f59e0b" />
-            <Cell fill="#ef4444" />
-          </Bar>
-
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+        <div className="flex justify-between p-4 rounded-xl bg-red-50">
+          <span className="font-medium text-red-700">
+            Hard
+          </span>
+          <span>
+            {difficultyData[2]?.value} solved
+          </span>
+        </div>
+      </div>
+      </div>
+      </div>
       )}
       
       {/* TRACK FORM */}
-      <TrackProblemForm
+      <div id="tracked-problems">
+      <TrackProblemForm 
         onSuccess={(newData) => {
           setProblems(newData);     
           fetchDashboard();         
         }}
       />
+      </div>
 
       {/*  TRACKED PROBLEMS */}
       <h2 className="text-xl font-bold mt-8 mb-4">
@@ -462,6 +568,8 @@ const Dashboard = () => {
           No activity yet.
         </p>
       )}
+    </main>
+    </div>
     </div>
   );
 };

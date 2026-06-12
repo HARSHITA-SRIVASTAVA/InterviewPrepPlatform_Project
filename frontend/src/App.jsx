@@ -12,7 +12,7 @@ import Analytics from "./pages/Analytics";
 function App() {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <Routes>
         <Route path="/" element={<Home />} />
