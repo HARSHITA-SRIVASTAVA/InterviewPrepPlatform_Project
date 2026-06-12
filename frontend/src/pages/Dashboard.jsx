@@ -324,12 +324,12 @@ const Dashboard = () => {
     )}
 
       {/* Progess Chart */}
-      {stats && (
-     <div className="bg-white p-6 rounded-2xl shadow-md mt-6">
-      <h2 className="text-2xl font-bold mb-6">
+        <h2 className="text-2xl font-bold mb-6 mt-6">
         Progress by Difficulty 📊
       </h2>
 
+      {stats && (
+     <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 mt-8">
       <div className="flex flex-col lg:flex-row items-center gap-8">
       <div className="w-full lg:w-1/2 h-[320px]">
 
@@ -338,8 +338,8 @@ const Dashboard = () => {
           data={difficultyData}
           cx="50%"
           cy="50%"
-          innerRadius={70}
-          outerRadius={110}
+          innerRadius={80}
+          outerRadius={120}
           dataKey="value"
           paddingAngle={4}>
           <Cell fill="#22c55e" />
@@ -351,7 +351,7 @@ const Dashboard = () => {
       </div>
 
       <div className="space-y-4 w-full lg:w-1/2">
-        <div className="flex justify-between p-4 rounded-xl bg-green-50">
+        <div className="flex justify-between p-4 rounded-xl bg-green-50 border border-green-100 hover:shadow-sm transition-all">
           <span className="font-medium text-green-700">
             Easy
           </span>
@@ -360,7 +360,7 @@ const Dashboard = () => {
           </span>
         </div>
 
-        <div className="flex justify-between p-4 rounded-xl bg-amber-50">
+        <div className="flex justify-between p-4 rounded-xl bg-amber-50 border border-amber-100 hover:shadow-sm transition-all">
           <span className="font-medium text-amber-700">
             Medium
           </span>
@@ -369,7 +369,7 @@ const Dashboard = () => {
           </span>
         </div>
 
-        <div className="flex justify-between p-4 rounded-xl bg-red-50">
+        <div className="flex justify-between p-4 rounded-xl bg-red-50 border border-red-100 hover:shadow-sm transition-all">
           <span className="font-medium text-red-700">
             Hard
           </span>
