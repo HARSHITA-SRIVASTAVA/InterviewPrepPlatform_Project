@@ -129,28 +129,21 @@ const revisedToday = problems.filter((p) => {
   );
 }).length;
 
-const isOverdue = (date) => {
-  const today = new Date();
-  const reviewDate = new Date(date);
+const overdue = problems.filter((p) => {
+  const reviewDate = new Date(p.lastReviewed);
 
   const diffDays = Math.floor(
     (today - reviewDate) / (1000 * 60 * 60 * 24)
   );
 
   return diffDays > 7;
-};
-
-const overdue = problems.filter((p) =>
-  isOverdue(p.lastReviewed)
-).length;
-
-const streak = revisedToday > 0 ? 1 : 0;
+}).length;
 
 const revisionStats = {
   dueToday,
   revisedToday,
   overdue,
-  streak,
+  streak: revisedToday > 0 ? 1 : 0,
 };
 
 
