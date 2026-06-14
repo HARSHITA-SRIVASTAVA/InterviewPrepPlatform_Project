@@ -515,7 +515,7 @@ const Dashboard = () => {
       {/* RECOMMENDED PROBLEMS */}
       <div className="flex justify-between items-center mb-6 mt-5">
       <h2 className="text-2xl font-bold">
-        Recommended Problem 🎯
+        Recommended Problem 
       </h2>
 
       <span className="text-sm text-purple-600 font-medium">
@@ -582,10 +582,10 @@ const Dashboard = () => {
       {/* RECENT ACTIVITY */}
       <div className="flex justify-between items-center mb-6 mt-5">
         <h2 className="text-2xl font-bold ">
-          Recent Activity
+          Recent Activity 
         </h2>
 
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-purple-600 font-medium">
           Last tracked updates
         </span>
       </div>
@@ -599,7 +599,7 @@ const Dashboard = () => {
           {activity.map((a) => (
             <div
               key={a._id}
-              className="flex items-center bg-white justify-between border border-gray-200 rounded-xl p-4 hover:border-purple-200 hover:shadow-sm transition"
+              className="bg-white flex items-center justify-between border border-gray-200 rounded-xl p-4 hover:border-purple-200 hover:shadow-sm transition"
             >
               <div>
                 <h3 className="font-semibold text-gray-800">

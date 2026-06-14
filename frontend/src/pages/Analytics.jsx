@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import API from "../api/axios";
 
 import {BarChart,Bar,LineChart,Line,XAxis,YAxis,Tooltip,CartesianGrid,PieChart,Pie,Cell,} from "recharts";
+import DashboardLayout from "../components/DashboardLayout";
 
 const Analytics = () => {
 
@@ -84,6 +85,8 @@ const Analytics = () => {
   ];
 
   return (
+
+    <DashboardLayout>
 
     <div className="p-6 w-full">
 
@@ -222,6 +225,7 @@ const Analytics = () => {
       )}
       
     </div>
+    </DashboardLayout>
   );
 };
 

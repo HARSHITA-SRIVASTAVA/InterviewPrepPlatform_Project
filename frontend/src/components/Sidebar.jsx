@@ -10,12 +10,13 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="w-64 min-h-screen bg-white border-r shadow-sm">
+    <div className="w-64 py-3 bg-white border-r shadow-sm">
 
-      <div className="p-6 border-b">
-        <h1 className="text-2xl font-bold text-purple-600">
+      <div className="p-4 border-b">
+        <Link to="/" 
+        className="text-2xl font-bold text-purple-600">
           PrepTracker
-        </h1>
+        </Link>
       </div>
 
       <div className="p-4 space-y-2">

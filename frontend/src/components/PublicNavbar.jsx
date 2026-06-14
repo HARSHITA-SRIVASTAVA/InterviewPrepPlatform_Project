@@ -15,7 +15,7 @@ const PublicNavbar = () => {
 
         <Link
           to="/login"
-          className="px-4 py-2 rounded-lg border border-purple-500 text-purple-600 hover:bg-purple-50"
+          className="px-6 py-2 rounded-lg border bg-purple-500 text-white font-bold hover:bg-purple-400"
         >
           Login
         </Link>
