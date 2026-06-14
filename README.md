@@ -1,4 +1,4 @@
-###  PrepTracker
+#  PrepTracker
 
 ## 📌 Overview
 
@@ -69,58 +69,53 @@ Help improve weak areas
 
 ## Application Screenshots
 
-# 🏠 Home Page
+### 🏠 Home Page
 
 The landing page introduces PrepTracker and highlights its core capabilities.
 
-![Home Page]<img width="1891" height="902" alt="image" src="https://github.com/user-attachments/assets/ee2c2f4a-6720-4b3e-8206-e252422f665a" />
+<img width="1891" height="902" alt="image" src="https://github.com/user-attachments/assets/ee2c2f4a-6720-4b3e-8206-e252422f665a" />
 
-# 📊 Dashboard Overview
+### 📊 Dashboard Overview
 
 A centralized dashboard displaying progress metrics, achievements, streaks, and coding statistics.
 
-![Dashboard] <img width="1897" height="907" alt="image" src="https://github.com/user-attachments/assets/17952703-0d84-4d05-ac55-ae2eabaacee6" />
+<img width="1897" height="907" alt="image" src="https://github.com/user-attachments/assets/17952703-0d84-4d05-ac55-ae2eabaacee6" />
 
-# 📈 Progress Tracking
+### 📈 Progress Tracking
 
 Visual representation of coding progress across different difficulty levels.
 
-![Analytics] <img width="1582" height="746" alt="image" src="https://github.com/user-attachments/assets/c816dc79-66d4-4f12-9785-153774b8a245" />
+<img width="1582" height="746" alt="image" src="https://github.com/user-attachments/assets/c816dc79-66d4-4f12-9785-153774b8a245" />
 
 
-# 📝 Problem Tracking
+### 📝 Problem Tracking
 
 Track coding problems, update status, search problems, and organize interview preparation efficiently.
 
-![Problem Tracking]<img width="1597" height="902" alt="image" src="https://github.com/user-attachments/assets/d962a097-92a2-4367-bf77-c6fb2a881a23" />
+<img width="1597" height="902" alt="image" src="https://github.com/user-attachments/assets/d962a097-92a2-4367-bf77-c6fb2a881a23" />
 
 # 🎯 Recommended Problems
 
 Personalized recommendations to encourage continuous learning.
 
-![Recommendations] <img width="1591" height="640" alt="image" src="https://github.com/user-attachments/assets/e05d083a-044f-4dfe-b992-a65ea8139171" />
+<img width="1591" height="640" alt="image" src="https://github.com/user-attachments/assets/e05d083a-044f-4dfe-b992-a65ea8139171" />
 
-# 📚 Revision Center
+### 📚 Revision Center
 
 Review previously solved problems and maintain long-term retention through structured revision.
 
-![Revision Center] <img width="1890" height="906" alt="image" src="https://github.com/user-attachments/assets/a7499bb4-25e1-4b5c-807f-b48329a836d3" />
+<img width="1890" height="906" alt="image" src="https://github.com/user-attachments/assets/a7499bb4-25e1-4b5c-807f-b48329a836d3" />
 
-# 📈 Analytics 
+### 📈 Analytics 
 
 Personalized analytics to improve and track performance.
 
-![Recommendations] 
 <img width="1887" height="767" alt="image" src="https://github.com/user-attachments/assets/3258d57c-4f4b-4845-94c6-ce95b7ec3d53" />
 <img width="1542" height="757" alt="image" src="https://github.com/user-attachments/assets/0d290842-84f3-4d28-afae-fd02b371d756" />
 
 --- 
 
 ## 🎥 Demo
-
-(Optional but highly recommended)
-
-Add a short GIF showcasing:
 
 Login
 Dashboard
@@ -133,7 +128,7 @@ Revision Center
 
 ## Tech Stack
 
-# Frontend
+### Frontend
 
 * React.js
 * React Router
@@ -142,7 +137,7 @@ Revision Center
 * Axios
 * React Toastify
 
-# Backend
+### Backend
 
 * Node.js
 * Express.js
@@ -150,7 +145,7 @@ Revision Center
 * MongoDB
 * Mongoose
 
-## 🔐 Authentication System 
+###  Authentication System 
 
 * User Registration
 * Secure Password Hashing (bcrypt)
@@ -158,7 +153,7 @@ Revision Center
 * JWT Token Generation
 * Protected Routes using Middleware
   
-## Deployment *(Planned)*
+#### Deployment *(Planned)*
 
 * Backend: Render
 * Frontend: Vercel
@@ -204,14 +199,47 @@ frontend/
 
 ---
 
+###  Database Models
+User          Field	Type
+name          String
+email	        String	
+password	    String
 
-## 📡 API Endpoints (Current)
+### Problem
+Field          Type
+title	         String
+difficulty     String
+tags           Array
+link	         String
 
-### Auth Routes
+### Tracking
+Field  	       Type
+user	         ObjectId
+problem        ObjectId
+status         String
+lastReviewed	 Date
 
-* `POST /api/auth/register` → Register user
-* `POST /api/auth/login` → Login user (returns JWT)
-* `GET /api/auth/profile` → Protected route
+### API Endpoints 
+
+1.Authentication
+Method          Endpoint
+POST	          /api/auth/register
+POST	          /api/auth/login
+
+2.Problem Tracking
+Method	        Endpoint
+GET	            /api/tracking/get or getAll
+POST	          /api/tracking/add
+PUT	            /api/tracking/put
+DELETE	        /api/tracking/delete or deleteAll
+
+3.Analytics
+Method	        Endpoint
+GET	            /api/analytics/stats
+GET	            /api/analytics/recommendations
+GET	            /api/analytics/activity
+
+---
 
 ---
 
@@ -251,48 +279,6 @@ http://localhost:5173
 
 ---
 
-#  Database Models
-User          Field	Type
-name          String
-email	        String	
-password	    String
-
-# Problem
-Field          Type
-title	         String
-difficulty     String
-tags           Array
-link	         String
-
-# Tracking
-Field  	       Type
-user	         ObjectId
-problem        ObjectId
-status         String
-lastReviewed	 Date
-
-# API Endpoints 
-
-1.Authentication
-Method          Endpoint
-POST	          /api/auth/register
-POST	          /api/auth/login
-
-2.Problem Tracking
-Method	        Endpoint
-GET	            /api/tracking/get or getAll
-POST	          /api/tracking/add
-PUT	            /api/tracking/put
-DELETE	        /api/tracking/delete or deleteAll
-
-3.Analytics
-Method	        Endpoint
-GET	            /api/analytics/stats
-GET	            /api/analytics/recommendations
-GET	            /api/analytics/activity
-
----
-
 ## Future Enhancements
 
 * Spaced Repetition Algorithm
@@ -321,7 +307,7 @@ This project helped strengthen my understanding of:
 
 ---
 
-## 🧩 Challenges & Solutions
+##  Challenges & Solutions
 
 ## Authentication & Protected Routes
 
