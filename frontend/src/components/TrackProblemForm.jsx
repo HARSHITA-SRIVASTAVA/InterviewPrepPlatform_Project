@@ -82,6 +82,7 @@ const TrackProblemForm = ({ onSuccess }) => {
       </div>
 
       {/* Dropdown instead of input */}
+       <div className="flex flex-col lg:flex-row gap-3">
       <select
         value={problemId}
         onChange={(e) => setProblemId(e.target.value)}
@@ -113,6 +114,7 @@ const TrackProblemForm = ({ onSuccess }) => {
       >
         Add Problem
       </button>
+      </div>
 
       {message && (
         <p className="text-green-600 mt-2 text-sm">
