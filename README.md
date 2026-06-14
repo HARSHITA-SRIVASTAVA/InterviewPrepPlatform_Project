@@ -10,15 +10,67 @@
 
 PrepTracker is a full-stack MERN application designed to help software engineering candidates manage coding interview preparation efficiently. It provides centralized problem tracking, analytics, revision scheduling, and performance insights to support consistent learning and long-term retention.
 
-## 🌐 Live Backend API
+---
 
-Backend is deployed on Render:
+### 🎯 Key Achievement
+
+Designed and deployed a full-stack MERN application with authentication, analytics, revision tracking, and automated cloud deployment using Vercel and Render.
+
+---
+
+## 🌐 Live Demo
+
+### Frontend (Vercel)
+
+🔗 https://interview-prep-platform-project.vercel.app
+
+The frontend is deployed on Vercel and automatically updates whenever changes are pushed to GitHub.
+
+#### Environment Variable
+
+VITE_API_URL=https://preptracker-api-iyr8.onrender.com
+
+### Backend (Render)
 
 🔗 https://preptracker-api-iyr8.onrender.com
+
+The backend is deployed on Render and connected to MongoDB Atlas.
+
+#### Environment Variables
+
+MONGO_URI=<your_mongodb_connection_string>
+JWT_SECRET=<your_jwt_secret>
+NODE_ENV=production
+
+---
+
+## 🧪 Demo Account
+
+Email: test@example.com
+Password: 123456
+
+> Feel free to explore all features using the demo account.
+
+---
+
+## 🚀 Deployment Workflow
+
+### Frontend Deployment (Vercel)
+1.Push changes to GitHub.
+2.Vercel automatically detects new commits.
+3.The application is rebuilt and deployed.
+4.The latest version becomes available on the live URL.
+
+### Backend Deployment (Render)
+1.Push backend changes to GitHub.
+2.The backend is rebuilt and redeployed.
+3.API changes become available on the live backend URL.
 
 > ⚠️ Note: This backend is hosted on Render’s free tier.  
 > It may take **20–30 seconds to respond after inactivity** because the server goes to sleep.  
 > The first request after inactivity may be slow (cold start), but subsequent requests are fast.
+
+---
 
 ##  📌Overview
 
@@ -119,7 +171,7 @@ PrepTracker solves this by providing:
 * JWT Token Generation
 * Protected Routes using Middleware
   
-#### 🚧 Deployment in Progress *(Planned)*
+#### 🚧 Deployment
 
 * Backend: Render
 * Frontend: Vercel
@@ -202,7 +254,7 @@ Review previously solved problems and maintain long-term retention through struc
 
 <img width="1890" height="906" alt="image" src="https://github.com/user-attachments/assets/a7499bb4-25e1-4b5c-807f-b48329a836d3" />
 
-### 📈 Analytics 
+### 📈 Analytics Page
 
 Personalized analytics to improve and track performance.
 
@@ -292,21 +344,33 @@ USER ||--o{ PROBLEM : tracks
 
 ## 🔌 API Endpoints
 
-### Auth
+### Authentication
 
-POST /api/auth/register
-POST /api/auth/login
+POST /api/auth/register 
+POST /api/auth/login 
+GET /api/auth/profile
 
 ### Problems
 
 GET /api/problems
 POST /api/problems
+GET /api/problems/:id
 PUT /api/problems/:id
 DELETE /api/problems/:id
 
-### Analytics
+### Tracking
 
-GET /api/analytics
+GET    /api/tracking
+POST   /api/tracking
+PUT    /api/tracking/:trackingId
+DELETE /api/tracking/:trackingId
+
+### Dashboard
+
+GET /api/dashboard
+Activity History
+GET /api/activity
+
 
 ---
 
@@ -315,8 +379,9 @@ GET /api/analytics
 ### 1. Clone Repository
 
 ```bash
-git clone : https://github.com/HARSHITA-SRIVASTAVA/InterviewPrepPlatform_Project
-cd INTERVIEW_PREP_PROJECT
+git clone https://github.com/HARSHITA-SRIVASTAVA/InterviewPrepPlatform_Project.git
+
+cd InterviewPrepPlatform_Project
 ```
 
 ### 2. Backend Setup
@@ -353,6 +418,7 @@ http://localhost:5173
 
 ## 📌 Project Highlights
 
+- Full-Stack MERN Architecture
 - JWT Authentication
 - RESTful API Architecture
 - MVC Backend Structure
@@ -360,6 +426,7 @@ http://localhost:5173
 - Responsive Dashboard Design
 - Protected Routes
 - Revision Tracking System
+- GitHub + Vercel + Render CI/CD Deployment
   
 ---
 
