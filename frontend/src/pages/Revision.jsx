@@ -102,14 +102,57 @@ const needsRevision=(date)=>{
     return diffDays>3;  //True if not revisied for >=3 days 
 }
 
-const revisionStats = {
-  dueToday: problems.length,
-  revisedToday: 2, // static for now
-  overdue: problems.filter((p) =>
-    needsRevision(p.lastReviewed)
-  ).length,
-  streak: 7, // static for now
+// const revisionStats = {
+//   dueToday: problems.length,
+//   revisedToday: 2, // static for now
+//   overdue: problems.filter((p) =>
+//     needsRevision(p.lastReviewed)
+//   ).length,
+//   streak: 7, // static for now
+// };
+
+const dueToday = problems.filter((p) =>
+  needsRevision(p.lastReviewed)
+).length;
+
+const today = new Date();
+
+const revisedToday = problems.filter((p) => {
+  if (!p.lastReviewed) return false;
+
+  const reviewDate = new Date(p.lastReviewed);
+
+  return (
+    reviewDate.getDate() === today.getDate() &&
+    reviewDate.getMonth() === today.getMonth() &&
+    reviewDate.getFullYear() === today.getFullYear()
+  );
+}).length;
+
+const isOverdue = (date) => {
+  const today = new Date();
+  const reviewDate = new Date(date);
+
+  const diffDays = Math.floor(
+    (today - reviewDate) / (1000 * 60 * 60 * 24)
+  );
+
+  return diffDays > 7;
 };
+
+const overdue = problems.filter((p) =>
+  isOverdue(p.lastReviewed)
+).length;
+
+const streak = revisedToday > 0 ? 1 : 0;
+
+const revisionStats = {
+  dueToday,
+  revisedToday,
+  overdue,
+  streak,
+};
+
 
 if (loading) {
   return (
