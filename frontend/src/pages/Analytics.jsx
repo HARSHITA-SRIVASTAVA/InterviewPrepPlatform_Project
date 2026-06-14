@@ -6,6 +6,8 @@ import DashboardLayout from "../components/DashboardLayout";
 
 const Analytics = () => {
 
+  const [loading, setLoading] = useState(true);
+
   const [stats, setStats] = useState(null);
 
   useEffect(() => {
@@ -17,6 +19,7 @@ const Analytics = () => {
   const fetchAnalytics = async () => {
 
     try {
+      setLoading(true);
 
       const token = localStorage.getItem("token");
 
@@ -31,6 +34,9 @@ const Analytics = () => {
     } catch (error) {
 
       console.log(error.message);
+    }
+    finally {
+      setLoading(false);
     }
   };
 
@@ -83,6 +89,19 @@ const Analytics = () => {
     "#F59E0B",
     "#EF4444",
   ];
+
+  if (loading) {
+  return (
+    <DashboardLayout>
+      <div className="flex flex-col items-center justify-center h-[60vh]">
+      <div className="w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-4 text-gray-500">
+        📊 Loading analytics...
+        </p>
+    </div>
+    </DashboardLayout>
+  );
+}
 
   return (
 
