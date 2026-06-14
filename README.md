@@ -1,6 +1,6 @@
 #  PrepTracker
 
-## 📌 Overview
+##  Overview
 
 A full-stack coding interview preparation platform that helps developers organize coding problems, track progress, maintain revision schedules, and build consistent problem-solving habits.
 
@@ -31,36 +31,36 @@ PrepTracker solves this by providing:
 
 ## Key Features
 
-# 1-🔐 Secure Authentication
+## 1-🔐 Secure Authentication
 JWT-based authentication
 Protected routes
 Secure user sessions
 
-# 2-📝 Problem Tracking
+## 2-📝 Problem Tracking
 Add coding problems
 Mark problems as solved or unsolved
 Search and filter tracked problems
 Categorize by difficulty
 
-# 3-📊 Analytics Dashboard
+## 3-📊 Analytics Dashboard
 Total problems tracked
 Solved vs unsolved breakdown
 Focus area identification
 Streak tracking
 Progress visualization
 
-# 4-📈 Interactive Progress Analytics
+## 4-📈 Interactive Progress Analytics
 Difficulty-wise progress tracking
 Visual charts and statistics
 Performance insights
 
-# 5-📚 Revision Center
+## 5-📚 Revision Center
 Review previously solved problems
 Track last revision dates
 Identify overdue problems
 Strengthen long-term retention
 
-# 6-🎯 Smart Recommendations
+## 6-🎯 Smart Recommendations
 Suggest problems based on progress
 Encourage balanced practice
 Help improve weak areas
@@ -94,7 +94,7 @@ Track coding problems, update status, search problems, and organize interview pr
 
 <img width="1597" height="902" alt="image" src="https://github.com/user-attachments/assets/d962a097-92a2-4367-bf77-c6fb2a881a23" />
 
-# 🎯 Recommended Problems
+### 🎯 Recommended Problems
 
 Personalized recommendations to encourage continuous learning.
 
