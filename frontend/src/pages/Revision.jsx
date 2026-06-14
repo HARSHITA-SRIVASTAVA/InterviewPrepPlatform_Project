@@ -92,12 +92,87 @@ const needsRevision=(date)=>{
     return diffDays>3;  //True if not revisied for >=3 days 
 }
 
+const revisionStats = {
+  dueToday: problems.length,
+  revisedToday: 2, // static for now
+  overdue: problems.filter((p) =>
+    needsRevision(p.lastReviewed)
+  ).length,
+  streak: 7, // static for now
+};
+
 return (
     <div className="p-6">
 
-      <h1 className="text-3xl font-bold mb-6">
-        📘 Revision Center
-      </h1>
+      <div className="mb-8">
+  <h1 className="text-4xl font-bold text-gray-900">
+    📘 Revision Center
+  </h1>
+
+  <p className="text-gray-500 mt-2">
+    Review previously solved problems and strengthen long-term retention.
+  </p>
+</div>
+
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+
+  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+    <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center text-xl mb-4">
+      📚
+    </div>
+
+    <p className="text-gray-500 text-sm">
+      Due Today
+    </p>
+
+    <h3 className="text-3xl font-bold mt-1">
+      {revisionStats.dueToday}
+    </h3>
+  </div>
+
+  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+    <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center text-xl mb-4">
+      ✅
+    </div>
+
+    <p className="text-gray-500 text-sm">
+      Revised Today
+    </p>
+
+    <h3 className="text-3xl font-bold mt-1">
+      {revisionStats.revisedToday}
+    </h3>
+  </div>
+
+  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+    <div className="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center text-xl mb-4">
+      ⏰
+    </div>
+
+    <p className="text-gray-500 text-sm">
+      Overdue
+    </p>
+
+    <h3 className="text-3xl font-bold mt-1">
+      {revisionStats.overdue}
+    </h3>
+  </div>
+
+  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+    <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center text-xl mb-4">
+      🔥
+    </div>
+
+    <p className="text-gray-500 text-sm">
+      Revision Streak
+    </p>
+
+    <h3 className="text-3xl font-bold mt-1">
+      {revisionStats.streak}
+    </h3>
+  </div>
+
+</div>
 
       <div className="grid md:grid-cols-2 gap-4">
 

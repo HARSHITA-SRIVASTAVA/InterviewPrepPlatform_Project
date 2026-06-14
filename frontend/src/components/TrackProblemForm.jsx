@@ -73,13 +73,19 @@ const TrackProblemForm = ({ onSuccess }) => {
       onSubmit={handleSubmit}
       className="bg-white p-4 rounded-xl shadow-md mt-6"
     >
-      <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Track New Problem</h2>
+      {/* <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Track New Problem</h2> */}
+
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-xl font-bold text-gray-800">
+          ➕ Track New Problem
+        </h2>
+      </div>
 
       {/* Dropdown instead of input */}
       <select
         value={problemId}
         onChange={(e) => setProblemId(e.target.value)}
-        className="border p-2 w-full mb-3 rounded"
+        className="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus-ring-2 "
         required
       >
         <option value="">Select a problem</option>
@@ -95,7 +101,7 @@ const TrackProblemForm = ({ onSuccess }) => {
       <select
         value={status}
         onChange={(e) => setStatus(e.target.value)}
-        className="border p-2 w-full mb-3 rounded"
+        className=" lg:ml-2 lg:w-48 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus-ring-2 focus:ring-purple-500"
       >
         <option value="unsolved">Unsolved</option>
         <option value="solved">Solved</option>
@@ -103,7 +109,7 @@ const TrackProblemForm = ({ onSuccess }) => {
 
       <button
         type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded"
+        className=" lg:ml-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-2.5 rounded-xl font-medium hover:scale-105 transition"
       >
         Add Problem
       </button>

@@ -482,7 +482,7 @@ const Dashboard = () => {
 
       {/*  PROBLEMS LIST */}
       {filteredProblems.length > 0 ? (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
           {filteredProblems.map((p) => (
             <ProblemCard
               key={p._id}
@@ -512,57 +512,120 @@ const Dashboard = () => {
         </p>
       )} */}
 
-      {/* RECOMMENDED PROBLEMS  */}
-      <h2 className="text-xl font-bold mt-8 mb-4">
-        Recommended Problems 🎯
+      {/* RECOMMENDED PROBLEMS */}
+      <div className="flex justify-between items-center mb-6 mt-5">
+      <h2 className="text-2xl font-bold">
+        Recommended Problem 🎯
       </h2>
 
-      {loading ? (
-        <p className="text-gray-500">Loading recommendations...</p>
-      ) : recommended.length > 0 ? (
-        <div className="flex flex-col gap-4">
-          {recommended.map((p) => (
-            <div
-              key={p._id}
-              className="bg-yellow-50 border p-4 rounded-xl shadow-sm"
-            >
-              <h3 className="font-semibold">{p.title}</h3>
+      <span className="text-sm text-purple-600 font-medium">
+        Based on your weak areas
+      </span>
+    </div>
+    
+    {loading ? (
+      <p className="text-gray-500">Loading recommendations...</p>
+    ) : recommended.length > 0 ? (
 
-              <p className="text-sm text-gray-500">
-                {p.difficulty}
-              </p>
+      <div className="grid md:grid-cols-2 gap-4">
 
-              {p.link && (
-                <a
-                  href={p.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 text-sm mt-2 inline-block hover:underline"
+        {recommended.map((p) => (
+          <div
+            key={p._id}
+            className="border border-gray-200 bg-white rounded-2xl p-5 hover:shadow-md transition"
+          >
+            <div className="flex justify-between items-start">
+
+              <div>
+                <h3 className="font-semibold text-lg text-gray-800">
+                  {p.title}
+                </h3>
+
+                <span
+                  className={`inline-block mt-2 px-4 py-1 rounded-xl text-xs font-medium
+                  ${
+                    p.difficulty === "Easy"
+                      ? "bg-green-100 text-green-700"
+                      : p.difficulty === "Medium"
+                      ? "bg-yellow-100 text-yellow-700"
+                      : "bg-red-100 text-red-700"
+                  }`}
                 >
-                  Solve Problem →
-                </a>
-              )}
+                  {p.difficulty}
+                </span>
+              </div>
+
             </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-gray-500">
-          You're doing great 🎉 Try exploring new problems!
-        </p>
-      )}
-      {/* ACTIVITY SECTION */}
-      <h2 className="text-xl font-bold mt-8 mb-4">
-        Recent Activity
-      </h2>
+
+            {p.link && (
+              <a
+                href={p.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-4 text-purple-600 font-medium hover:text-purple-800"
+              >
+                Solve Problem →
+              </a>
+            )}
+          </div>
+        ))}
+
+      </div>
+
+    ) : (
+      <p className="text-gray-500">
+        You're doing great 🎉
+      </p>
+    )}
+  
+
+      {/* RECENT ACTIVITY */}
+      <div className="flex justify-between items-center mb-6 mt-5">
+        <h2 className="text-2xl font-bold ">
+          Recent Activity
+        </h2>
+
+        <span className="text-sm text-gray-500">
+          Last tracked updates
+        </span>
+      </div>
 
       {loading ? (
         <p className="text-gray-500">Loading activity...</p>
       ) : activity.length > 0 ? (
-        <div className="flex flex-col gap-3">
+
+        <div className="space-y-4">
+
           {activity.map((a) => (
-            <ActivityItem key={a._id} activity={a} />
+            <div
+              key={a._id}
+              className="flex items-center bg-white justify-between border border-gray-200 rounded-xl p-4 hover:border-purple-200 hover:shadow-sm transition"
+            >
+              <div>
+                <h3 className="font-semibold text-gray-800">
+                  {a.problem?.title}
+                </h3>
+
+                <p className="text-sm text-gray-500">
+                  {new Date(a.updatedAt).toLocaleDateString()}
+                </p>
+              </div>
+
+              <span
+                className={`px-3 py-1 rounded-full text-xs font-medium
+                ${
+                  a.status === "solved"
+                    ? "bg-green-100 text-green-700"
+                    : "bg-orange-100 text-orange-700"
+                }`}
+              >
+                {a.status}
+              </span>
+            </div>
           ))}
+
         </div>
+
       ) : (
         <p className="text-gray-500">
           No activity yet.

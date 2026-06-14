@@ -2,7 +2,7 @@ const Header = ({level}) => {
 
   const username="Coder";
   return (
-    <div className="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between">
+    <div className="bg-white  px-8 py-4 flex items-center justify-between border-b border-gray-500">
 
       {/* Search */}
 

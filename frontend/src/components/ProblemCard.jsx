@@ -123,19 +123,22 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
 
   return (
     <>
-    <div className="bg-white p-5 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all transition duration-300 animate-fadeIn">
+    <div className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-lg border border-gray-100 hover:-translate-y-1 transition-all transition duration-300 animate-fadeIn">
       
       {/*left side */}
+      <div className="flex justify-between items-start mb-4">
       
-      <h3 className="font-semibold text-lg">
-        {problem.problem?.title}
-      </h3>
+        <h3 className="font-bold text-xl text-gray-800">
+          {problem.problem?.title}
+        </h3>
+
+      </div>
 
       
-      <span className={`text-xs  px-3 py-1 rounded-full inline-block mt-2 ${
-        problem.problem?.difficulty === "Easy"? " text-green-700"
-        : problem.problem?.difficulty === "Medium"? "text-yellow-700"
-        : "text-red-700"
+      <span className={`text-sm  px-3 py-1 rounded-2xl inline-block mt-2 font-medium ${
+        problem.problem?.difficulty === "Easy"? "bg-green-100 text-green-700"
+        : problem.problem?.difficulty === "Medium"? "bg-yellow-100 text-yellow-700"
+        : "bg-red-100 text-red-700"
       }`}>
         {problem.problem?.difficulty === "Easy" && "🟢 "}
         {problem.problem?.difficulty === "Medium" && "🟡 "}
@@ -145,19 +148,28 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
       </span>
      
 
-      <p className="mt-2">
-        <span className={`text-xs px-3 py-1 rounded mt-2 inline-block ${
+      <p className="lg:ml-2 mt-2  inline-block ">
+        <span className={`text-sm  px-3 py-1 rounded-2xl mt-2 font-medium ${
           problem.status === "solved"
-          ? "bg-green-100 text-green-600": "bg-yellow-100 text-yellow-600"}`}>
+          ? "bg-green-100 text-green-700": "bg-orange-100 text-orange-700"}`}>
           {problem.status}
         </span>
       </p>
+
+      <div className="text-sm text-gray-500 space-y-2 mb-5 mt-4">
+        <p>
+          📅 {new Date(problem.createdAt).toLocaleDateString()}
+        </p>
+        <p>
+          🏷️ {problem.problem.tags?.slice(0,2).join(", ")}
+        </p>
+      </div>
 
       <div className="gap-5 mt-3 items-end">
         <button
           onClick={handleToggleStatus}
           disabled={actionLoading}
-          className="bg-green-500 hover:bg-green-600 active:scale-95 text-white px-4 py-1 rounded text-sm transition"
+          className="px-4 py-1 rounded-xl border border-green-500 text-green-600 hover:bg-green-50 text-sm transition"
         >
           {actionLoading
             ? "Updating..."
@@ -169,7 +181,7 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
         <button
           onClick={handleDelete}
           disabled={actionLoading}
-          className="bg-red-500 hover:bg-red-600 active:scale-95 text-white px-3 py-1 rounded text-sm transition"
+          className="lg:ml-1  px-4 py-1 rounded-xl border border-red-500 text-red-600 hover:bg-red-50 text-sm transition"
         >
           {actionLoading ? "Removing..." : "Remove"}
         </button>
@@ -179,7 +191,7 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
       <div>
       <button
         onClick={() => setShowNotes(!showNotes)}
-        className="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition">
+        className="mt-2 px-4 py-1 rounded-xl border border-purple-500 text-purple-600 hover:bg-purple-50">
       {showNotes ? "Hide Notes" : "Add Notes"}
       </button>
 
@@ -191,7 +203,7 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
       onChange={(e) => setNotes(e.target.value)}
       rows={6}
       placeholder="Write your interview notes here..."
-      className="w-full border rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none bg-white"
+      className="w-full border rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-gray-200 resize-none bg-white"
     />
 
     <div className="flex justify-end gap-3 mt-3">
@@ -206,22 +218,22 @@ const ProblemCard = ({ problem, onUpdate, setProblems }) => {
       <button
         onClick={handleSaveNotes}
         disabled={savingNotes}
-        className="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white"
+        className="px-4 py-2 rounded-lg bg-purple-500 hover:bg-purple-600 text-white"
       >
         {savingNotes ? "Saving..." : "Save Notes"}
       </button>
 
     </div>
-  </div>
-)}
-      </div>
+    </div>
+    )}
+    </div>
 
       {problem.problem?.link && (
         <a
           href={problem.problem.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-600 text-sm mt-2 inline-block hover:underline hover:translate-x-1 transition"
+          className="text-purple-600 text-medium mt-2 inline-block hover:underline hover:translate-x-1 transition"
         >
           Solve Problem →
         </a>
