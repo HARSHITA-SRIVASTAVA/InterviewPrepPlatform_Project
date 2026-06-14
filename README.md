@@ -10,6 +10,16 @@
 
 PrepTracker is a full-stack MERN application designed to help software engineering candidates manage coding interview preparation efficiently. It provides centralized problem tracking, analytics, revision scheduling, and performance insights to support consistent learning and long-term retention.
 
+## 🌐 Live Backend API
+
+Backend is deployed on Render:
+
+🔗 https://preptracker-api-iyr8.onrender.com
+
+> ⚠️ Note: This backend is hosted on Render’s free tier.  
+> It may take **20–30 seconds to respond after inactivity** because the server goes to sleep.  
+> The first request after inactivity may be slow (cold start), but subsequent requests are fast.
+
 ##  📌Overview
 
 A full-stack coding interview preparation platform that helps developers organize coding problems, track progress, maintain revision schedules, and build consistent problem-solving habits.
