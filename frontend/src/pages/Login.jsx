@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
 
+import { Link } from "react-router-dom";
+
 //create component
 const Login = () => {   //formData->curr val , setFormData->update data
   
@@ -81,6 +83,7 @@ return (
         Login
       </h2>
 
+
       <form onSubmit={handleSubmit}>
           
         <div className="mb-4">
@@ -109,12 +112,22 @@ return (
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition"
         >
           Login
         </button>
 
       </form>
+
+      <p className="text-center text-sm text-gray-600 mt-4">
+        Don't have an account?{" "}
+        <Link
+          to="/register"
+          className="text-purple-600 font-medium hover:underline"
+        >
+          Create one
+        </Link>
+      </p>
     </div>
   </div>
   );

@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/Navbar";
 import Revision from "./pages/Revision";
 import Analytics from "./pages/Analytics";
+import Register from "./pages/Register";
 
 import PublicNavbar from "./components/PublicNavbar";
 
@@ -18,7 +19,7 @@ function App() {
   const showNavbar =
     location.pathname === "/" ||
     location.pathname === "/login";
-    
+
   return (
     <>
       {/* <Navbar /> */}
@@ -28,6 +29,8 @@ function App() {
         <Route path="/" element={<Home />} />
 
         <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />

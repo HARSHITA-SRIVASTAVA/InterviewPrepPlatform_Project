@@ -20,6 +20,13 @@ const PublicNavbar = () => {
           Login
         </Link>
 
+        <Link
+          to="/register"
+          className="px-6 py-2 rounded-lg border bg-purple-500 text-white font-bold hover:bg-purple-400"
+        >
+          Create Account
+        </Link>
+
       </div>
 
     </nav>
