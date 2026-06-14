@@ -1,5 +1,11 @@
 # 🚀 PrepTracker
 
+![React](https://img.shields.io/badge/React-19-blue)
+![Node.js](https://img.shields.io/badge/Node.js-Express-green)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-brightgreen)
+![JWT](https://img.shields.io/badge/Auth-JWT-orange)
+![Status](https://img.shields.io/badge/Status-Active-success)
+
 ## 📖 About
 
 PrepTracker is a full-stack MERN application designed to help software engineering candidates manage coding interview preparation efficiently. It provides centralized problem tracking, analytics, revision scheduling, and performance insights to support consistent learning and long-term retention.
@@ -233,16 +239,18 @@ backend/
 ```bash
 frontend/
 │
-├──src/
-    ├── api/
-    ├── components/
-    ├── context/
-    ├── pages/
-├──App.jsx
+├── src/
+│   ├── api/
+│   ├── components/
+│   ├── context/
+│   ├── pages/
+│   ├── layouts/
+│   └── App.jsx
+│
 ├── index.html
-├── talwind.config.js
+├── tailwind.config.js
 ├── vite.config.js
-├── server.jspackage.json
+└── package.json
 ```
 ---
 
@@ -319,12 +327,17 @@ npm run dev
 
 ### 3.Frontend Steup
 
-cd client
+```bash
+cd frontend
 npm install
 npm run dev
+```
 
 Application will run at:
+
+```bash
 http://localhost:5173
+```
 
 ---
 
@@ -343,18 +356,18 @@ http://localhost:5173
 ## 🚀 Future Enhancements
 
 ### Phase 1
--  Dark Mode
--  Export Progress Reports
--  Contest Tracking
+-  [ ] Dark Mode
+-  [ ] Export Progress Reports
+-  [ ] Contest Tracking
 
 ### Phase 2
--  LeetCode API Integration
--  Weekly Email Reports
--  Topic-wise Learning Paths
+- [ ]  LeetCode API Integration
+- [ ]  Weekly Email Reports
+- [ ]  Topic-wise Learning Paths
 
 ### Phase 3
--  AI-Powered Revision Suggestions
--  Spaced Repetition System
+-  [ ] AI-Powered Revision Suggestions
+-  [ ]  Spaced Repetition System
 
 ---
 
@@ -375,23 +388,23 @@ This project helped strengthen my understanding of:
 
 ## 🧩 Challenges & Solutions
 
-## Authentication & Protected Routes
+### 1.Authentication & Protected Routes
 
 Managing user sessions across multiple pages was challenging. I solved this using JWT authentication, React Context API, and protected routes to ensure secure access control.
 
-## Analytics Visualization
+### 2.Analytics Visualization
 
 Transforming raw tracking data into meaningful charts required data aggregation and debugging Recharts rendering issues. Proper data formatting and responsive chart containers resolved these challenges.
 
-## Revision Tracking Logic
+### 3.Revision Tracking Logic
 
 Designing a useful revision system required identifying problems that needed review based on previous activity. I implemented date-based revision tracking to encourage long-term retention.
 
-## UI Consistency & Scalability
+### 4.UI Consistency & Scalability
 
 As more pages were added, maintaining consistent layouts became difficult. I created a reusable Dashboard Layout component to centralize shared UI elements such as the sidebar and header.
 
-## Responsive Design
+### 5.Responsive Design
 Building a dashboard that worked across different screen sizes required careful use of Tailwind's responsive utilities and flexible grid layouts.
 
 ---
