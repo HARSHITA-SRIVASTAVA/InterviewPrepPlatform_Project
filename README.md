@@ -1,6 +1,10 @@
-#  PrepTracker
+# 🚀 PrepTracker
 
-##  Overview
+## 📖 About
+
+PrepTracker is a full-stack MERN application designed to help software engineering candidates manage coding interview preparation efficiently. It provides centralized problem tracking, analytics, revision scheduling, and performance insights to support consistent learning and long-term retention.
+
+##  📌Overview
 
 A full-stack coding interview preparation platform that helps developers organize coding problems, track progress, maintain revision schedules, and build consistent problem-solving habits.
 
@@ -14,9 +18,9 @@ Instead of solving problems on the platform, users:
 
 ---
 
-## Why PrepTracker?
+## 🌟Why PrepTracker?
 
-Preparing for coding interviews often involves solving hundreds of problems across multiple topics and difficulty levels. Keeping track of progress, identifying weak areas, and revisiting old problems can quickly become overwhelming.
+Coding interview preparation often involves solving 300–500+ problems across topics such as Arrays, DP, Graphs, Trees, and Greedy Algorithms. Tracking progress manually through spreadsheets becomes inefficient and makes it difficult to identify weak areas. PrepTracker centralizes preparation into a single dashboard with analytics, revision tracking, and performance insights.
 
 PrepTracker solves this by providing:
 
@@ -29,45 +33,121 @@ PrepTracker solves this by providing:
 
 ---
 
-## Key Features
+## ✨ Key Features
 
-## 1-🔐 Secure Authentication
-JWT-based authentication
-Protected routes
-Secure user sessions
+### 1- 🔐Secure Authentication
+* JWT-based authentication
+* Protected routes
+* Secure user sessions
 
-## 2-📝 Problem Tracking
-Add coding problems
-Mark problems as solved or unsolved
-Search and filter tracked problems
-Categorize by difficulty
+### 2- 📝 Problem Tracking
+* Add coding problems
+* Mark problems as solved or unsolved
+* Search and filter tracked problems
+* Categorize by difficulty
 
-## 3-📊 Analytics Dashboard
-Total problems tracked
-Solved vs unsolved breakdown
-Focus area identification
-Streak tracking
-Progress visualization
+### 3- 📊 Analytics Dashboard
+* Total problems tracked
+* Solved vs unsolved breakdown
+* Focus area identification
+* Streak tracking
+* Progress visualization
 
-## 4-📈 Interactive Progress Analytics
-Difficulty-wise progress tracking
-Visual charts and statistics
-Performance insights
+### 4- 📈 Interactive Progress Analytics
+* Difficulty-wise progress tracking
+* Visual charts and statistics
+* Performance insights
 
-## 5-📚 Revision Center
-Review previously solved problems
-Track last revision dates
-Identify overdue problems
-Strengthen long-term retention
+### 5- 📚 Revision Center
+* Review previously solved problems
+* Track last revision dates
+* Identify overdue problems
+* Strengthen long-term retention
 
-## 6-🎯 Smart Recommendations
-Suggest problems based on progress
-Encourage balanced practice
-Help improve weak areas
+### 6- 🎯 Smart Recommendations
+* Suggest problems based on progress
+* Encourage balanced practice
+* Help improve weak areas
+
+### 7- 📱 Responsive Design (In-Progress)
+* Desktop-friendly interface
+* Mobile-responsive layout
+* Consistent user experience
 
 ---
 
-## Application Screenshots
+## 🛠️ Tech Stack
+
+### Frontend
+
+* React.js
+* React Router
+* Tailwind CSS
+* Recharts
+* Axios
+* React Toastify
+
+### Backend
+
+* Node.js
+* Express.js
+* Database
+* MongoDB
+* Mongoose
+
+###  Authentication System 
+
+* User Registration
+* Secure Password Hashing (bcrypt)
+* Login with credential validation
+* JWT Token Generation
+* Protected Routes using Middleware
+  
+#### 🚧 Deployment in Progress *(Planned)*
+
+* Backend: Render
+* Frontend: Vercel
+* Database: MongoDB Atlas
+
+---
+
+## 🏗️ System Architecture
+
+```mermaid
+flowchart TD
+
+A[User] --> B[React Frontend]
+
+subgraph Frontend
+B --> C[Authentication]
+B --> D[Dashboard]
+B --> E[Problem Tracking]
+B --> F[Analytics]
+B --> G[Revision Center]
+end
+
+B -->|Axios Requests| H[Express Backend]
+
+subgraph Backend
+H --> I[Routes]
+I --> J[Controllers]
+J --> K[JWT Middleware]
+J --> L[Business Logic]
+end
+
+L --> M[(MongoDB)]
+
+M --> N[Users Collection]
+M --> O[Problems Collection]
+
+L --> P[Analytics Engine]
+L --> Q[Recommendation Engine]
+L --> R[Revision Tracking]
+```
+
+---
+
+## 🖼️ Application Screenshots
 
 ### 🏠 Home Page
 
@@ -126,42 +206,9 @@ Revision Center
 
 ---
 
-## Tech Stack
 
-### Frontend
-
-* React.js
-* React Router
-* Tailwind CSS
-* Recharts
-* Axios
-* React Toastify
-
-### Backend
-
-* Node.js
-* Express.js
-* Database
-* MongoDB
-* Mongoose
-
-###  Authentication System 
-
-* User Registration
-* Secure Password Hashing (bcrypt)
-* Login with credential validation
-* JWT Token Generation
-* Protected Routes using Middleware
-  
-#### Deployment *(Planned)*
-
-* Backend: Render
-* Frontend: Vercel
-* Database: MongoDB Atlas
-
----
-
-## ⚙️ Backend Architecture
+## 📂 Project Structure 
+### ⚙️ Backend Architecture
 
 Follows **MVC Pattern**:
 
@@ -181,65 +228,67 @@ backend/
 
 ---
 
-## ⚙️ Frontend Architecture
+### ⚙️ Frontend Architecture
 
 ```bash
 frontend/
 │
-├──src
-    ├── api
-    ├── components
-    ├── context
-    ├── pages
+├──src/
+    ├── api/
+    ├── components/
+    ├── context/
+    ├── pages/
+├──App.jsx
 ├── index.html
-├── talwind.config,js
+├── talwind.config.js
 ├── vite.config.js
 ├── server.jspackage.json
 ```
-
 ---
 
-###  Database Models
-User          Field	Type
-name          String
-email	        String	
-password	    String
+## 🗄️ Database Schema
 
-### Problem
-Field          Type
-title	         String
-difficulty     String
-tags           Array
-link	         String
+```mermaid
+erDiagram
 
-### Tracking
-Field  	       Type
-user	         ObjectId
-problem        ObjectId
-status         String
-lastReviewed	 Date
+USER {
+    string _id
+    string name
+    string email
+    string password
+}
 
-### API Endpoints 
+PROBLEM {
+    string _id
+    string title
+    string difficulty
+    string topic
+    string status
+    date solvedAt
+    date lastRevision
+}
 
-1.Authentication
-Method          Endpoint
-POST	          /api/auth/register
-POST	          /api/auth/login
-
-2.Problem Tracking
-Method	        Endpoint
-GET	            /api/tracking/get or getAll
-POST	          /api/tracking/add
-PUT	            /api/tracking/put
-DELETE	        /api/tracking/delete or deleteAll
-
-3.Analytics
-Method	        Endpoint
-GET	            /api/analytics/stats
-GET	            /api/analytics/recommendations
-GET	            /api/analytics/activity
-
+USER ||--o{ PROBLEM : tracks
+```
 ---
+
+## 🔌 API Endpoints
+
+### Auth
+
+POST /api/auth/register
+POST /api/auth/login
+
+### Problems
+
+GET /api/problems
+POST /api/problems
+PUT /api/problems/:id
+DELETE /api/problems/:id
+
+### Analytics
+
+GET /api/analytics
 
 ---
 
@@ -279,20 +328,37 @@ http://localhost:5173
 
 ---
 
-## Future Enhancements
+## 📌 Project Highlights
 
-* Spaced Repetition Algorithm
-* Dark Mode
-* LeetCode API Integration
-* Contest Tracking
-* Weekly Performance Reports
-* Export Progress Reports
-* AI-Powered Revision Suggestions
-* Topic-wise Learning Paths
+- JWT Authentication
+- RESTful API Architecture
+- MVC Backend Structure
+- Interactive Data Visualization
+- Responsive Dashboard Design
+- Protected Routes
+- Revision Tracking System
+  
+---
+
+## 🚀 Future Enhancements
+
+### Phase 1
+-  Dark Mode
+-  Export Progress Reports
+-  Contest Tracking
+
+### Phase 2
+-  LeetCode API Integration
+-  Weekly Email Reports
+-  Topic-wise Learning Paths
+
+### Phase 3
+-  AI-Powered Revision Suggestions
+-  Spaced Repetition System
 
 ---
 
-## What I Learned
+## 📈 What I Learned
 
 This project helped strengthen my understanding of:
 
@@ -307,7 +373,7 @@ This project helped strengthen my understanding of:
 
 ---
 
-##  Challenges & Solutions
+## 🧩 Challenges & Solutions
 
 ## Authentication & Protected Routes
 
@@ -330,7 +396,7 @@ Building a dashboard that worked across different screen sizes required careful 
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
 Contributions, ideas, and suggestions are welcome.
 
