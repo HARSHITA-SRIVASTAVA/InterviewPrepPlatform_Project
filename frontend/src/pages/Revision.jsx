@@ -3,6 +3,9 @@ import API from "../api/axios";    //send Http request
 
 import { toast } from "react-toastify";  //for notification 
 
+import DashboardLayout from "../components/DashboardLayout";
+
+
 const Revision = () => {
 
   const [problems, setProblems] = useState([]);
@@ -102,6 +105,9 @@ const revisionStats = {
 };
 
 return (
+
+  <DashboardLayout level={1}>
+
     <div className="p-6">
 
       <div className="mb-8">
@@ -211,7 +217,7 @@ return (
 
             <button 
             onClick={() => handleRevision(item._id)}
-            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm transition">
+            className="mt-4 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-sm transition">
                 ✅ Mark Revised
             </button>
 
@@ -219,6 +225,7 @@ return (
     ))}
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 
