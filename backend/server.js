@@ -12,7 +12,14 @@ const app = express();
 
 // Middleware (Always goes before routes)
 app.use(express.json());
-app.use(cors());
+
+//frontend deployment
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  })
+);
 
 //Route Imports
 const authRoutes = require("./routes/authRoutes");

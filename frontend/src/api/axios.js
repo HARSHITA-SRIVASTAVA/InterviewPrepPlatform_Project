@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API=axios.create({
-    baseURL:import.meta.env.VITE_API_URL,
+  baseURL:`${import.meta.env.VITE_API_URL}/api`,
 });
 
 //if any error -> redirect to login (401 error )
