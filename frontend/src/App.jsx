@@ -12,6 +12,8 @@ import Register from "./pages/Register";
 
 import PublicNavbar from "./components/PublicNavbar";
 
+import NotFound from "./pages/NotFound";
+
 function App() {
 
   const location = useLocation();
@@ -39,7 +41,12 @@ function App() {
 
           <Route path="/analytics" element={<Analytics />}/>
         </Route>
+
+        <Route path="*" element={<NotFound />} />
+
       </Routes>
+
+
     </>
   );
 }
