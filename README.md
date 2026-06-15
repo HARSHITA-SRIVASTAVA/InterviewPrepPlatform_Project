@@ -328,15 +328,25 @@ USER {
     string password
 }
 
-PROBLEM {
-    string _id
-    string title
-    string difficulty
-    string topic
-    string status
-    date solvedAt
-    date lastRevision
+Problem
+{
+ title,
+ difficulty,
+ topic,
+ tags,
+ link,
+ platform,
+ description
 }
+
+Tracking
+{
+ user,
+ problem,
+ status,
+ notes,
+ lastReviewed
+} 
 
 USER ||--o{ PROBLEM : tracks
 ```
