@@ -7,14 +7,19 @@
 ![Status](https://img.shields.io/badge/Status-Active-success)
 
 ## 📖 About
-
-PrepTracker is a full-stack MERN application designed to help software engineering candidates manage coding interview preparation efficiently. It provides centralized problem tracking, analytics, revision scheduling, and performance insights to support consistent learning and long-term retention.
+Full-stack MERN interview preparation platform with authentication, analytics, revision scheduling, and coding problem tracking.
 
 ---
 
-### 🎯 Key Achievement
+## ✨ Key Features
 
-Designed and deployed a full-stack MERN application with authentication, analytics, revision tracking, and automated cloud deployment using Vercel and Render.
+- JWT Authentication
+- Problem Tracking
+- Analytics Dashboard
+- Revision Center
+- Smart Recommendations
+- Progress Visualization
+- Cloud Deployment
 
 ---
 
@@ -36,20 +41,68 @@ VITE_API_URL=https://preptracker-api-iyr8.onrender.com
 
 The backend is deployed on Render and connected to MongoDB Atlas.
 
-#### Environment Variables
+#### Required Environment Variables:
 
-MONGO_URI=<your_mongodb_connection_string>
-JWT_SECRET=<your_jwt_secret>
-NODE_ENV=production
+Frontend
+- VITE_API_URL
+
+Backend
+- MONGO_URI
+- JWT_SECRET
 
 ---
 
-## 🧪 Demo Account
+<!-- ## 🧪 Demo Account
 
 Email: test@example.com
 Password: 123456
 
-> Feel free to explore all features using the demo account.
+> Feel free to explore all features using the demo account. -->
+
+---
+
+## 🖼️ Application Screenshots
+
+### 🏠 Home Page
+
+The landing page introduces PrepTracker and highlights its core capabilities.
+
+![Landing Page](./screenshots/landing-page.png)
+
+### 📊 Dashboard Overview
+
+A centralized dashboard displaying progress metrics, achievements, streaks, and coding statistics.
+
+![Dashboard](./screenshots/dashboard.png)
+
+### 📝 Problem Tracking
+
+Track coding problems, update status, search problems, and organize interview preparation efficiently.
+
+![Problem Tracking](./screenshots/problem-tracking.png)
+
+### 🎯 Recommended Problems
+
+Personalized recommendations to encourage continuous learning.
+
+<img width="1591" height="640" alt="image" src="https://github.com/user-attachments/assets/e05d083a-044f-4dfe-b992-a65ea8139171" />
+
+### 📚 Revision Center
+
+Review previously solved problems and maintain long-term retention through structured revision.
+
+![Revision Center](./screenshots/revision-center.png)
+
+### 📈 Analytics Page
+
+Personalized analytics to improve and track performance.
+
+![Analytics](./screenshots/analytics.png)
+
+--- 
+
+## 🎥 Demo Video
+[Watch Demo] https://youtu.be/8R4NLIKPTWI
 
 ---
 
@@ -71,6 +124,12 @@ Password: 123456
 > The first request after inactivity may be slow (cold start), but subsequent requests are fast.
 
 ---
+
+## 🎯 Project Goals
+
+PrepTracker was built to help developers organize interview preparation through structured problem tracking, analytics, and revision scheduling.
+
+The goal was to replace scattered spreadsheets and notes with a centralized platform that encourages consistency and long-term retention.
 
 ##  📌Overview
 
@@ -159,7 +218,6 @@ PrepTracker solves this by providing:
 
 * Node.js
 * Express.js
-* Database
 * MongoDB
 * Mongoose
 
@@ -214,66 +272,6 @@ L --> R[Revision Tracking]
 ```
 
 ---
-
-## 🖼️ Application Screenshots
-
-### 🏠 Home Page
-
-The landing page introduces PrepTracker and highlights its core capabilities.
-
-<img width="1891" height="902" alt="image" src="https://github.com/user-attachments/assets/ee2c2f4a-6720-4b3e-8206-e252422f665a" />
-
-### 📊 Dashboard Overview
-
-A centralized dashboard displaying progress metrics, achievements, streaks, and coding statistics.
-
-<img width="1897" height="907" alt="image" src="https://github.com/user-attachments/assets/17952703-0d84-4d05-ac55-ae2eabaacee6" />
-
-### 📈 Progress Tracking
-
-Visual representation of coding progress across different difficulty levels.
-
-<img width="1582" height="746" alt="image" src="https://github.com/user-attachments/assets/c816dc79-66d4-4f12-9785-153774b8a245" />
-
-
-### 📝 Problem Tracking
-
-Track coding problems, update status, search problems, and organize interview preparation efficiently.
-
-<img width="1597" height="902" alt="image" src="https://github.com/user-attachments/assets/d962a097-92a2-4367-bf77-c6fb2a881a23" />
-
-### 🎯 Recommended Problems
-
-Personalized recommendations to encourage continuous learning.
-
-<img width="1591" height="640" alt="image" src="https://github.com/user-attachments/assets/e05d083a-044f-4dfe-b992-a65ea8139171" />
-
-### 📚 Revision Center
-
-Review previously solved problems and maintain long-term retention through structured revision.
-
-<img width="1890" height="906" alt="image" src="https://github.com/user-attachments/assets/a7499bb4-25e1-4b5c-807f-b48329a836d3" />
-
-### 📈 Analytics Page
-
-Personalized analytics to improve and track performance.
-
-<img width="1887" height="767" alt="image" src="https://github.com/user-attachments/assets/3258d57c-4f4b-4845-94c6-ce95b7ec3d53" />
-<img width="1542" height="757" alt="image" src="https://github.com/user-attachments/assets/0d290842-84f3-4d28-afae-fd02b371d756" />
-
---- 
-
-## 🎥 Demo
-
-Login
-Dashboard
-Add Problem
-Analytics
-Revision Center
-![Demo](screenshots/demo.gif)
-
----
-
 
 ## 📂 Project Structure 
 ### ⚙️ Backend Architecture
@@ -395,19 +393,23 @@ cd InterviewPrepPlatform_Project
 ```
 
 ### 2. Backend Setup
-
 ```bash
 cd backend
 npm install
+```
 
-Create a .env file inside the backend folder:
+Create a `.env` file:
+
+```env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
+```
 
-Start backend server:
+Start backend:
+
+```bash
 npm run dev
-
 ```
 
 ### 3.Frontend Steup
@@ -433,10 +435,9 @@ http://localhost:5173
 - RESTful API Architecture
 - MVC Backend Structure
 - Interactive Data Visualization
-- Responsive Dashboard Design
 - Protected Routes
 - Revision Tracking System
-- GitHub + Vercel + Render CI/CD Deployment
+- Cloud Deployment with CI/CD (GitHub → Vercel/Render)
   
 ---
 
@@ -446,6 +447,7 @@ http://localhost:5173
 -  [ ] Dark Mode
 -  [ ] Export Progress Reports
 -  [ ] Contest Tracking
+-  [ ] Responsive Design
 
 ### Phase 2
 - [ ]  LeetCode API Integration
